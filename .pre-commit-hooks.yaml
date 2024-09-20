@@ -1,0 +1,7 @@
+-   id: check-tf
+    name: check tf
+    description: Check if custom rules are satisfied.
+    entry: tfrulecheck
+    additional_depencencies: tfrulecheck
+    language: python
+    types: [python]

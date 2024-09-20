@@ -1,8 +1,8 @@
-from tofudecorator.controller import TofuDecoratorController
+from tfrulecheck.controller import TfDecoratorController
 
 
 
 
 if __name__ == "__main__":
-    ctl = TofuDecoratorController()
+    ctl = TfDecoratorController()
     ctl.handle()

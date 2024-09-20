@@ -13,7 +13,7 @@ module "thisistanexample" {
 
 # @forcedremotesource
 module "thisistananotherexample" {
-    source = "git@gitlab.com"
+    source = "../"
     version = "1.2.3"
 }
 
