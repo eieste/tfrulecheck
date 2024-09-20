@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tfrulecheck"
+dynamic = ["version"]
+dependencies = [
+  "python-hcl2==4.3.5"
+]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "sphinx-autobuild",
+    "coverage",
+    "pytest",
+    "pytest-mock"
+]
+
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39"]
+include = '\.pyi?$'
+exclude = '''
+/(
+  \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-outpython-hcl2==4.3.5
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "pyproject"
+line_length = 88
+known_third_party = ["your_third_party_lib"]
+known_first_party = "your_project"
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = "E203, W503"
+
+
+[tool.coverage.report]
+fail_under = 80
+
+[tool.coverage.run]
+branch = true
+include = ["cmptree/*"]
+# command_line = "-m unittest discover -s tests/"
+# source = ["."]
