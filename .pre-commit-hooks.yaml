@@ -2,6 +2,6 @@
     name: check tf
     description: Check if custom rules are satisfied.
     entry: tfrulecheck
-    additional_depencencies: tfrulecheck
+    additional_dependencies: ["git+https://github.com/eieste/tfrulecheck.git@main"]
     language: python
     types: [python]
