@@ -62,3 +62,7 @@ branch = true
 include = ["tfrulecheck/*"]
 # command_line = "-m unittest discover -s tests/"
 # source = ["."]
+
+
+[project.scripts]
+tfrulecheck = "tfrulecheck.main:main"
