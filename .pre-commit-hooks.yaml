@@ -4,4 +4,4 @@
     entry: tfrulecheck
     language: python
     types: [python]
-    files: '(.*\.tf)$'
+    files: (\.tf|\.tfvars)$
