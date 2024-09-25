@@ -3,5 +3,4 @@
     description: Check if custom rules are satisfied.
     entry: tfrulecheck
     language: python
-    types: [python]
     files: (\.tf|\.tfvars)$
