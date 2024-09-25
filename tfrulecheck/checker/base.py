@@ -7,6 +7,11 @@ class HclBlock(enum.Enum):
     ALL = "all"
     MODULE = "module"
     RESOURCE = "resource"
+    DATA = "data"
+    PROVIDER = "provider"
+    TERRAFORM = "terraform"
+    LOCALS = "locals"
+    VARIABLE = "variable"
 
 
 class BaseChecker:
