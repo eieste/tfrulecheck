@@ -4,4 +4,3 @@
     entry: tfrulecheck
     language: python
     files: (\.tf|\.tfvars)$
-    args: ["-f"]
