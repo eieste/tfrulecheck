@@ -21,10 +21,16 @@ class TfDecoratorController:
         self._has_errors = True
 
     def handle(self):
-        if not self.options.file.exists():
+
+        for file in self.options.files:
+            self.handle_single_file(file)
+
+    def handle_single_file(self, file):
+            
+        if not file.exists():
             raise argparse.ArgumentError("File does not exist")
 
-        with self.options.file.open("r") as file:
+        with file.open("r") as file:
             content = file.read()
         
         hcl_data = hcl2.loads(content, True)
@@ -37,4 +43,3 @@ class TfDecoratorController:
 
         if not self.options.no_fail and self._has_errors:
             exit(1)
-            

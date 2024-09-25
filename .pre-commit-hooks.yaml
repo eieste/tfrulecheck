@@ -4,4 +4,4 @@
     entry: tfrulecheck
     language: python
     files: (\.tf|\.tfvars)$
-    require_serial: true
+    args: ["-f"]
