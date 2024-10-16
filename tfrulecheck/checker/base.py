@@ -12,6 +12,10 @@ class HclBlock(enum.Enum):
     TERRAFORM = "terraform"
     LOCALS = "locals"
     VARIABLE = "variable"
+    MOVED = "moved"
+    IMPORT = "import"
+    OUTPUT= "output"
+    
 
 
 class BaseChecker:
