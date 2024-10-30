@@ -3,28 +3,25 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tfrulecheck"
+name = "tfutils"
+description = "TFUtils provides different tools for Terraform Developers"
 dynamic = ["version"]
-dependencies = [
-  "python-hcl2==4.3.5"
-]
+readme = { file = 'README.md', content-type = 'text/markdown' }
+license = { file = 'LICENSE' }
+authors = [{ name = "Stefan Eiermann", email = "stefan.eiermann@eneka.de" }]
+dependencies = ["python-hcl2"]
+
+
+[tool.setuptools]
+packages = ["tfutils"]
 
 [tool.setuptools.dynamic]
-version = {file = "VERSION"}
+version = { file = "VERSION" }
 
 [project.optional-dependencies]
-dev = [
-    "pre-commit",
-    "sphinx-autobuild",
-    "coverage",
-    "pytest",
-    "pytest-mock"
-]
+dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock"]
 
-docs = [
-    "sphinx",
-    "sphinx_rtd_theme",
-]
+docs = ["sphinx", "sphinx_rtd_theme"]
 
 [tool.black]
 line-length = 88
@@ -47,8 +44,8 @@ exclude = '''
 [tool.isort]
 profile = "pyproject"
 line_length = 88
-known_third_party = ["your_third_party_lib"]
-known_first_party = "tfrulecheck"
+# known_third_party = ["your_third_party_lib"]
+known_first_party = "tfutils"
 
 [tool.flake8]
 max-line-length = 88
@@ -59,10 +56,9 @@ fail_under = 80
 
 [tool.coverage.run]
 branch = true
-include = ["tfrulecheck/*"]
+include = ["tfutils/*"]
 # command_line = "-m unittest discover -s tests/"
 # source = ["."]
 
-
 [project.scripts]
-tfrulecheck = "tfrulecheck.main:main"
+tfutils = "tfutils.main:main"

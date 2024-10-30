@@ -1,6 +1,6 @@
 -   id: check-tf
     name: check tf
     description: Check if custom rules are satisfied.
-    entry: tfrulecheck
+    entry: tfutils
     language: python
     files: (\.tf)$
