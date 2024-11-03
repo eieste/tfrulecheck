@@ -25,3 +25,17 @@ resource "aws_s3_bucket_object" "object2" {
   source   = "myfiles/${each.value}"
   etag     = filemd5("myfiles/${each.value}")
 }
+
+
+
+# @forcedremotesource
+module "testmodule_localsource" {
+  source = "../../"
+
+}
+
+# @forcedremotesource
+module "testmodule_remotesource" {
+  source = "git@github.com"
+  version = "1.2.3"
+}
