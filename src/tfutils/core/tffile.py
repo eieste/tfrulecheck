@@ -58,7 +58,8 @@ class TfBlock:
     def __repr__(self):
         return f"<BlockWrapper id={self._id}>"
 
-    def get_id(self):
+    @property
+    def id(self):
         return self._id
 
     def get_tf_file(self):
@@ -82,6 +83,7 @@ class TfBlock:
     def __ge__(self, other):
         return self.start >= other.start
 
+    @property
     def content(self):
         return self._content
 
