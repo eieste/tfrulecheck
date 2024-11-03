@@ -4,3 +4,6 @@ pytest
 pytest-cov
 coverage
 setuptools>=38.6.0
+
+sphinx
+sphinx-autobuild

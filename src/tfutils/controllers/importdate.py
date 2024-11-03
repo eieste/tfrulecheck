@@ -1,4 +1,4 @@
-from tfutils.core.argparse import Command
+from tfutils.core.base import Command
 from tfutils.core.tfdecorator import TFDecorator
 from tfutils.core.tfpaths import TFPaths
 import sys
@@ -21,7 +21,6 @@ class RemoteSourceHandler(TFDecorator, TFPaths, Command):
             sys.exit(1)
 
         return results
-    
 
     def new_decorator(self, options, file, block_info):
         if block_info.get("block_type") != "module":
@@ -30,9 +29,8 @@ class RemoteSourceHandler(TFDecorator, TFPaths, Command):
             sys.exit(1)
 
         block = block_info.get("block",{})
-
         module_block = list(block.values())[0]
-
+        
         if not module_block.get("version"):
             self._error = True
             self.get_logger().error("Module Block had no Version Defined")

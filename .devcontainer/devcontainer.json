@@ -1,6 +1,16 @@
 {
   "service": "app",
   "dockerComposeFile": "./docker-compose.yaml",
-  "workspaceFolder": "/workspace"
-
-}
+  "workspaceFolder": "/workspace",
+  "postStartCommand": "pip install -e .",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hashicorp.terraform",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "lextudio.restructuredtext"
+      ] 
+    }
+  }
+  }

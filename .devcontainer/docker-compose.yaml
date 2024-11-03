@@ -6,4 +6,6 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ../:/workspace
-    entrypoint: []
+    # entrypoint: ["/entrypoint.sh sleep infinity"]
+    
+    

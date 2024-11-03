@@ -3,15 +3,15 @@ import argparse
 import hcl2
 import logging
 import re
-
+from tfutils.core.abstract import AbstractCommand
+from tfutils.core.tfpaths import TFPaths
 # \#\s?\@([a-z]+)(\((.*)\))?
   
 DECORATOR_REGEX = re.compile(r'#\s?\@([a-z]+)(\((.*)\))?',)
-PARAM_REGEX = re.compile(r'(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?')
 
 
-class TFDecorator:
-    
+class TFDecorator(TFPaths, AbstractCommand):
+
     def new_decorator(self, *args, **kwargs):
         raise NotImplementedError("Please implement a new decorator method")
 
