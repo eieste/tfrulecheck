@@ -1,11 +1,9 @@
 from tfutils.core.base import Command
-from tfutils.core.tfdecorator import TFDecorator
 from tfutils.core.tfpaths import TFPaths
 from tfutils.core.tffile import TfFile
 import sys
 
-
-class RemoteSourceHandler(TFDecorator, TFPaths, Command):
+class RemoteSourceHandler(TFPaths, Command):
     name = "forcedremotesource"
     help = "Check if a RemoteSource was set"
 

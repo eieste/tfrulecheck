@@ -1,11 +1,10 @@
 from tfutils.core.base import Command
-from tfutils.core.tfdecorator import TFDecorator
 from tfutils.core.tfpaths import TFPaths
 from tfutils.core.tffile import TfFile
 import sys
 
 
-class SourceSwapHandler(TFDecorator, TFPaths, Command):
+class SourceSwapHandler(TFPaths, Command):
     name = "sourceswap"
     help = "Check if a RemoteSource was set"
 

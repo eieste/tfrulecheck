@@ -1,11 +1,10 @@
 from tfutils.core.base import Command
-from tfutils.core.tfdecorator import TFDecorator
 from tfutils.core.tfpaths import TFPaths
 from tfutils.core.tffile import TfFile
 import sys
 
 
-class BlockDateHandler(TFDecorator, TFPaths, Command):
+class BlockDateHandler(TFPaths, Command):
     block_name = None
     name = None
     help = None # "Check if a import-blocks has a date comment"
