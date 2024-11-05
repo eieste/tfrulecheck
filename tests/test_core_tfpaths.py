@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
 import argparse
 import logging
-import tempfile
 import pathlib
+import tempfile
+
 import pytest
-from tfutils.core.exp import PathIsNotValid 
+
+from tfutils.core.exp import PathIsNotValid
 from tfutils.core.tfpaths import TFPaths
+
 
 def test_get_file_list_invalid_path(caplog):
     parser = argparse.ArgumentParser()
@@ -25,7 +29,7 @@ def test_get_file_list_invalid_path(caplog):
         a = test.get_file_list([
             pathlib.Path(tfile.name),
         ])
-    
+
     with tempfile.TemporaryDirectory() as tdir:
         a = test.get_file_list([
             pathlib.Path(tdir),

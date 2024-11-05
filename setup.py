@@ -1,6 +1,5 @@
-from setuptools import setup, find_packages
-
-
+# -*- coding: utf-8 -*-
+from setuptools import find_packages, setup
 
 f = open('VERSION', 'r')
 VERSION = f.read()
@@ -24,7 +23,7 @@ setup(
     license='AGPLv3',
     packages=find_packages(
         where='src',
-        include=['tfutils*'], 
+        include=['tfutils*'],
     ),
     package_dir={"": "src"},
     package_data={'tfutils': ['templates/*']},

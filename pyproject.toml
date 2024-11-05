@@ -19,7 +19,7 @@ packages = ["tfutils"]
 version = { file = "VERSION" }
 
 [project.optional-dependencies]
-dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock"]
+dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit"]
 
 docs = ["sphinx", "sphinx_rtd_theme"]
 
@@ -42,10 +42,10 @@ exclude = '''
 '''
 
 [tool.isort]
-profile = "pyproject"
+profile = "black"
 line_length = 88
 # known_third_party = ["your_third_party_lib"]
-known_first_party = "tfutils"
+# known_first_party = "tfutils"
 
 [tool.flake8]
 max-line-length = 88

@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import argparse
-from tfutils.controllers.remotesource import RemoteSourceHandler
-from tfutils.controllers.blockdate import ImportDateHandler, MovedDateHandler
-from tfutils.controllers.sourceswap import SourceSwapHandler
-
-from collections import namedtuple
 import logging
+from collections import namedtuple
+
+from tfutils.controllers.blockdate import ImportDateHandler, MovedDateHandler
+from tfutils.controllers.remotesource import RemoteSourceHandler
+from tfutils.controllers.sourceswap import SourceSwapHandler
 
 HandlerInfo = namedtuple("HandlerInfo", ("handler_cls", "handler_obj", "init_parser"))
 
@@ -30,7 +31,7 @@ class TFUtils:
             cmd_parser = handler._init(parser, subparser)
             handler.add_arguments(cmd_parser)
             self.commands[handler.get_name()] = HandlerInfo(handler_cls, handler, cmd_parser)
-    
+
     def get_logger(self):
          return log
 

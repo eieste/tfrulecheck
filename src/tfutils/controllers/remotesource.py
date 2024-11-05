@@ -1,7 +1,10 @@
-from tfutils.core.base import Command
-from tfutils.core.tfpaths import TFPaths
-from tfutils.core.tffile import TfFile
+# -*- coding: utf-8 -*-
 import sys
+
+from tfutils.core.base import Command
+from tfutils.core.tffile import TfFile
+from tfutils.core.tfpaths import TFPaths
+
 
 class RemoteSourceHandler(TFPaths, Command):
     name = "forcedremotesource"
@@ -16,7 +19,7 @@ class RemoteSourceHandler(TFPaths, Command):
     def new_decorator(self, options, block):
         file_path = block.get_tf_file().path
         if not block.id.startswith("module"):
-            self.get_logger().error("The decorator @forcedremotesource can only applied to modules") 
+            self.get_logger().error("The decorator @forcedremotesource can only applied to modules")
             self.get_logger().debug("Block-Type: {block_type} in file {file} at line {decorator_pos}".format(**block_info, file=file))
             sys.exit(1)
 
@@ -32,7 +35,7 @@ class RemoteSourceHandler(TFPaths, Command):
             self.get_logger().error("Module Block has no Remote Source")
             self.get_logger().debug(f"Id: {block.id} in file {file_path}")
 
-    
+
     def handle(self, options):
         self._error = False
         if options.silent:
@@ -51,5 +54,3 @@ class RemoteSourceHandler(TFPaths, Command):
 
         if not options.allow_failure and self._error:
             sys.exit(1)
-
-

@@ -1,6 +1,8 @@
-import pytest
+# -*- coding: utf-8 -*-
 import hcl2
-from tfutils.core.tffile import TfFile, OpendTfFile, TfBlock
+
+from tfutils.core.tffile import OpendTfFile, TfBlock, TfFile
+
 
 def test_filemetadata_extract_blocks_simple(mocker):
     mocker.patch("tfutils.core.tffile.TfFile.read_tf")
@@ -36,7 +38,7 @@ def test_filemetadata_extract_blocks_more(mocker):
     targets = ["terraform.required_providers", "provider.aws", "resource.aws_s3_bucket.example", "resource.aws_s3_bucket_object.object2"]
     print(fm._blocks)
     assert all([ block.get_id() in targets for block in fm._blocks ])
-    
+
 
 def test_find_decorators_nothing_found(mocker):
     mocker.patch("tfutils.core.tffile.TfFile.read_tf", return_value=OpendTfFile(None, ["a", "b", "c", "d"], None) )

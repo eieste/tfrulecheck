@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 class TFUtilException(Exception):
     pass
 

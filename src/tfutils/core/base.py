@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 import argparse
+
 from tfutils.core.abstract import AbstractCommand
 
 

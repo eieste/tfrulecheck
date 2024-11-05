@@ -1,7 +1,9 @@
-from tfutils.core.base import Command
-from tfutils.core.tfpaths import TFPaths
-from tfutils.core.tffile import TfFile
+# -*- coding: utf-8 -*-
 import sys
+
+from tfutils.core.base import Command
+from tfutils.core.tffile import TfFile
+from tfutils.core.tfpaths import TFPaths
 
 
 class BlockDateHandler(TFPaths, Command):
@@ -25,7 +27,7 @@ class BlockDateHandler(TFPaths, Command):
         block_content = block.content
 
         dec = block.get_decorator(self.get_name())
-        
+
         if dec is None:
             self._error = True
             self.get_logger().error(f"{self.get_block_name()} Block has no date decorator")

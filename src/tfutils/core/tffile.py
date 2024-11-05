@@ -1,11 +1,9 @@
+# -*- coding: utf-8 -*-
 import pathlib
-import argparse
-import hcl2
-import logging
 import re
 from collections import namedtuple
-from tfutils.core.abstract import AbstractCommand
-from collections.abc import Iterable
+
+import hcl2
 
 # \#\s?\@([a-z]+)(\((.*)\))?
 
@@ -58,7 +56,7 @@ class TfBlock:
 
     def __str__(self):
         return self._id
-    
+
     def __repr__(self):
         return f"<BlockWrapper id={self._id}>"
 
@@ -83,7 +81,7 @@ class TfBlock:
 
     def __gt__(self, other):
         return self.start > other.start
-        
+
     def __ge__(self, other):
         return self.start >= other.start
 
@@ -117,7 +115,7 @@ class TfBlock:
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(TfUtilDecorator(self, result.group(1), result.group(2)))
             line_nr =- 1
-             
+
         return decorator_list
 
 

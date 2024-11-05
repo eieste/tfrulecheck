@@ -1,8 +1,7 @@
-import pathlib
+# -*- coding: utf-8 -*-
 import argparse
-import hcl2
-import logging
-import re
+import pathlib
+
 from tfutils.core.abstract import AbstractCommand
 from tfutils.core.exp import PathIsNotValid
 
@@ -31,7 +30,7 @@ class TFPaths(AbstractCommand):
         :param path: Path Object of target folder or file on the filesystem
         :type path: pathlib.Path
         :raises PathIsNotValid: when the Path does not exist
-        :return: list 
+        :return: list
         :rtype: list[pathlib.Path]
         """
         if not path.exists():
@@ -39,9 +38,9 @@ class TFPaths(AbstractCommand):
         if path.is_dir():
             return list(path.glob(self.__class__.SEARCH_GLOB))
         return [path]
-    
+
     def get_file_list(self, paths: pathlib.Path) -> list[pathlib.Path]:
-        """Resolve all given cli nargs. If a given path has no file matching it logs a warning 
+        """Resolve all given cli nargs. If a given path has no file matching it logs a warning
 
         :param paths: list[pathlib.Path]
         :type paths: pathlib.Path

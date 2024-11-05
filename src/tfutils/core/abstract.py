@@ -1,4 +1,4 @@
-import logging
+# -*- coding: utf-8 -*-
 import argparse
 
 
@@ -13,10 +13,10 @@ class AbstractCommand:
 
     def get_logger(self):
         return self._cmd.get_logger()
-    
+
     def add_arguments(self, parser: argparse.ArgumentParser):
         raise NotImplementedError("Please implement an add_arguments method")
-    
+
     def get_name(self):
         if self.__class__.name is None:
             raise NotImplementedError("Please give your Command a name arg ")
@@ -26,7 +26,7 @@ class AbstractCommand:
         if self.__class__.help is None:
             raise NotImplementedError("Please give your Command a help arg")
         return self.help
-    
+
     def get_logger(self):
         return self._cmd.get_logger()
 
@@ -34,6 +34,6 @@ class AbstractCommand:
         if options.command == self.get_name():
             return True
         return False
-        
+
     def handle(self, option):
         raise NotImplementedError("Please implement this method in {self.__class__}")
