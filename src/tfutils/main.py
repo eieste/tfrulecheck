@@ -1,5 +1,8 @@
 import argparse
 from tfutils.controllers.remotesource import RemoteSourceHandler
+from tfutils.controllers.blockdate import ImportDateHandler, MovedDateHandler
+from tfutils.controllers.sourceswap import SourceSwapHandler
+
 from collections import namedtuple
 import logging
 
@@ -9,18 +12,24 @@ log = logging.getLogger("tfutils")
 
 class TFUtils:
     handlers = [
-        RemoteSourceHandler
+        RemoteSourceHandler,
+        ImportDateHandler,
+        MovedDateHandler,
+        SourceSwapHandler,
     ]
 
     def __init__(self):
         self.commands = {}
 
     def _init_handlers(self, parser):
+
+        subparser = parser.add_subparsers(dest='command')
+
         for handler_cls in self.__class__.handlers:
             handler = handler_cls(self, parser)
-            subparser = handler._init(parser)
-            handler.add_arguments(subparser)
-            self.commands[handler.get_name()] = HandlerInfo(handler_cls, handler, subparser)
+            cmd_parser = handler._init(parser, subparser)
+            handler.add_arguments(cmd_parser)
+            self.commands[handler.get_name()] = HandlerInfo(handler_cls, handler, cmd_parser)
     
     def get_logger(self):
          return log

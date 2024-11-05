@@ -52,6 +52,10 @@ class TfBlock:
     def start(self):
         return self._start_line
 
+    @property
+    def end(self):
+        return self._end_line
+
     def __str__(self):
         return self._id
     
@@ -86,6 +90,11 @@ class TfBlock:
     @property
     def content(self):
         return self._content
+
+    def get_decorator(self, name):
+        for dec in self.decorators:
+            if dec.get_name() == name:
+                return dec
 
     @property
     def decorators(self):

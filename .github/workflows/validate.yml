@@ -54,6 +54,6 @@ jobs:
 
       # You can test your matrix by printing the current Python version
       - name: Test Install
-        run: 
-          - pip3 install .
-          - tfutils --help
+        run: |
+          pip3 install .; 
+          tfutils --help
