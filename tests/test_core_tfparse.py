@@ -23,7 +23,7 @@ def test_filemetadata_extract_blocks_simple(mocker):
         "",
     )
     targets = ["terraform.required_providers"]
-    assert all([block.get_id() in targets for block in fm._blocks])
+    assert all([block.id in targets for block in fm._blocks])
 
 
 def test_filemetadata_extract_blocks_more(mocker):
@@ -39,9 +39,12 @@ def test_filemetadata_extract_blocks_more(mocker):
         "provider.aws",
         "resource.aws_s3_bucket.example",
         "resource.aws_s3_bucket_object.object2",
+        "module.testmodule_localsource.source",
+        "module.testmodule_remotesource.source",
+        "moved",
     ]
     print(fm._blocks)
-    assert all([block.get_id() in targets for block in fm._blocks])
+    assert all([block.id in targets for block in fm._blocks])
 
 
 def test_find_decorators_nothing_found(mocker):
@@ -51,7 +54,7 @@ def test_find_decorators_nothing_found(mocker):
     )
     tff = TfFile("", autoparse=False)
     bw = TfBlock(tff, "foo", {"__start_line__": 5, "__end_line__": 5})
-    assert bw.find_decorators() == []
+    assert bw._find_decorators() == []
 
 
 def test_find_decorators_found(mocker):
@@ -65,7 +68,7 @@ def test_find_decorators_found(mocker):
     )
     tff = TfFile("", autoparse=False)
     nbw = TfBlock(tff, "foo", {"__start_line__": 4, "__end_line__": 5})
-    x = nbw.find_decorators()
+    x = nbw._find_decorators()
     assert x[0].get_name() == "fooo"
     assert len(x) == 1
     assert x[0].get_parameter("bar") == "test"

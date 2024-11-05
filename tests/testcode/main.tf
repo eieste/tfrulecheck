@@ -40,7 +40,7 @@ module "testmodule_remotesource" {
   source = "../../"
 }
 
-# @moveddate(create="01-11-2024", expire="02-11-2024")
+# @moveddate(create="01-11-2024")
 moved {
   from = "old"
   to   = "new"
