@@ -34,13 +34,15 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
 
         if not block_content.get("version"):
             self._error = True
-            self.get_logger().error("Module Block had no Version Defined")
-            self.get_logger().debug(f"Id: {block.id} in file {file_path}")
+            self.get_logger().error(
+                f"Module Block had no Version Defined in {file_path}:{block.start}"
+            )
 
         if block_content.get("source")[0] == ".":
             self._error = True
-            self.get_logger().error("Module Block has no Remote Source")
-            self.get_logger().debug(f"Id: {block.id} in file {file_path}")
+            self.get_logger().error(
+                f"Module Block has no Remote Source in {file_path}:{block.start}"
+            )
 
     def handle(self, options):
         self._error = False
