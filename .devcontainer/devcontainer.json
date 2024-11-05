@@ -9,7 +9,8 @@
         "hashicorp.terraform",
         "ms-azuretools.vscode-docker",
         "ms-python.python",
-        "lextudio.restructuredtext"
+        "lextudio.restructuredtext",
+        "github.vscode-github-actions"
       ] 
     }
   }
