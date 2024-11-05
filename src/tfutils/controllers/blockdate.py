@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import sys
+from datetime import datetime, timedelta
 
 from tfutils.core.base import Command
 from tfutils.core.tffile import TfFile
 from tfutils.core.tfpaths import TFPaths
-from datetime import datetime, timedelta
+
 
 class BlockDateHandler(TFPaths, Command):
     block_name = None
@@ -14,7 +15,11 @@ class BlockDateHandler(TFPaths, Command):
     def add_arguments(self, parser):
         parser = super().add_arguments(parser)
 
-        parser.add_argument("--expire-after", type=int, help="Returns all blocks that are older than the specified time period. The time span in days")
+        parser.add_argument(
+            "--expire-after",
+            type=int,
+            help="Returns all blocks that are older than the specified time period. The time span in days",
+        )
         parser.add_argument(
             "-s", "--silent", action="store_true", help="Prevent any log output"
         )
@@ -32,7 +37,6 @@ class BlockDateHandler(TFPaths, Command):
 
     def new_block(self, options, block):
         file_path = block.get_tf_file().path
-        block_content = block.content
 
         dec = block.get_decorator(self.get_name())
 
@@ -47,15 +51,20 @@ class BlockDateHandler(TFPaths, Command):
 
             if not options.expire_after:
                 if dec.get_parameter("expire"):
-                    dec_date_expire = datetime.strptime(dec.get_parameter("expire"), "%d-%m-%Y")
+                    dec_date_expire = datetime.strptime(
+                        dec.get_parameter("expire"), "%d-%m-%Y"
+                    )
                     if now > dec_date_expire:
                         self._error = True
-                        self.get_logger().error(f"Moved Block expired in file: {file_path} Line {block.start}")
+                        self.get_logger().error(
+                            f"Moved Block expired in file: {file_path} Line {block.start}"
+                        )
             else:
-                if now > dec_date_create+timedelta(days=options.expire_after):
+                if now > dec_date_create + timedelta(days=options.expire_after):
                     self._error = True
-                    self.get_logger().error(f"Moved Block expired in file: {file_path} Line {block.start}")
-
+                    self.get_logger().error(
+                        f"Moved Block expired in file: {file_path} Line {block.start}"
+                    )
 
     def handle(self, options):
         self._error = False
@@ -66,7 +75,6 @@ class BlockDateHandler(TFPaths, Command):
 
         tf_files = self.get_file_list(options.paths)
 
-        parsed_files = []
         for file in tf_files:
             file = TfFile(file)
 

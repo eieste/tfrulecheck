@@ -52,11 +52,8 @@ class RemoteSourceHandler(TFPaths, Command):
         if options.silent:
             self.get_logger().setLevel(1000)
 
-        result = super(TFDecorator, self).handle(options)
-
         tf_files = self.get_file_list(options.paths)
 
-        parsed_files = []
         for file in tf_files:
             file = TfFile(file)
 
