@@ -6,7 +6,7 @@ from tfutils.core.tffile import TfFile
 from tfutils.core.tfpaths import TFPaths
 
 
-class RemoteSourceHandler(TFPaths, Command):
+class ForcedRemoteSourceHandler(TFPaths, Command):
     name = "forcedremotesource"
     help = "Check if a RemoteSource was set"
 
@@ -27,11 +27,6 @@ class RemoteSourceHandler(TFPaths, Command):
         if not block.id.startswith("module"):
             self.get_logger().error(
                 "The decorator @forcedremotesource can only applied to modules"
-            )
-            self.get_logger().debug(
-                "Block-Type: {block_type} in file {file} at line {decorator_pos}".format(
-                    **block_info, file=file
-                )
             )
             sys.exit(1)
 

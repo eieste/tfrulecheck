@@ -35,9 +35,9 @@ module "testmodule_localsource" {
 }
 
 # @forcedremotesource
+# @sourceswap(remote_version="1.2", remote_source="gitlab.com", local_source="../../")
 module "testmodule_remotesource" {
-  source = "git@github.com"
-  version = "1.2.3"
+  source = "../../"
 }
 
 # @moveddate(create="01-11-2024", expire="02-11-2024")

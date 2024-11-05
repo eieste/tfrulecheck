@@ -186,3 +186,9 @@ class TfFile:
             if block.has_decorator(name):
                 result.append(block)
         return result
+
+    def write_back(self):
+        with self.path.open("r+") as fobj:
+            fobj.truncate()
+            for line in self.get_tf_file().lines:
+                fobj.write(f"{line}\n")

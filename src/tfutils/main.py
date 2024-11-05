@@ -4,7 +4,7 @@ import logging
 from collections import namedtuple
 
 from tfutils.controllers.blockdate import ImportDateHandler, MovedDateHandler
-from tfutils.controllers.remotesource import RemoteSourceHandler
+from tfutils.controllers.forcedremotesource import ForcedRemoteSourceHandler
 from tfutils.controllers.sourceswap import SourceSwapHandler
 
 HandlerInfo = namedtuple("HandlerInfo", ("handler_cls", "handler_obj", "init_parser"))
@@ -14,7 +14,7 @@ log = logging.getLogger("tfutils")
 
 class TFUtils:
     handlers = [
-        RemoteSourceHandler,
+        ForcedRemoteSourceHandler,
         ImportDateHandler,
         MovedDateHandler,
         SourceSwapHandler,
