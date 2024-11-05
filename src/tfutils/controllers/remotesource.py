@@ -12,15 +12,27 @@ class RemoteSourceHandler(TFPaths, Command):
 
     def add_arguments(self, parser):
         parser = super().add_arguments(parser)
-        parser.add_argument("-s", "--silent", action="store_true", help="Prevent any log output")
-        parser.add_argument("--allow-failure", action="store_true", help="If this flag was set, the module logs only all occurences but does not exit with code 1")
+        parser.add_argument(
+            "-s", "--silent", action="store_true", help="Prevent any log output"
+        )
+        parser.add_argument(
+            "--allow-failure",
+            action="store_true",
+            help="If this flag was set, the module logs only all occurences but does not exit with code 1",
+        )
         return parser
 
     def new_decorator(self, options, block):
         file_path = block.get_tf_file().path
         if not block.id.startswith("module"):
-            self.get_logger().error("The decorator @forcedremotesource can only applied to modules")
-            self.get_logger().debug("Block-Type: {block_type} in file {file} at line {decorator_pos}".format(**block_info, file=file))
+            self.get_logger().error(
+                "The decorator @forcedremotesource can only applied to modules"
+            )
+            self.get_logger().debug(
+                "Block-Type: {block_type} in file {file} at line {decorator_pos}".format(
+                    **block_info, file=file
+                )
+            )
             sys.exit(1)
 
         block_content = block.content
@@ -34,7 +46,6 @@ class RemoteSourceHandler(TFPaths, Command):
             self._error = True
             self.get_logger().error("Module Block has no Remote Source")
             self.get_logger().debug(f"Id: {block.id} in file {file_path}")
-
 
     def handle(self, options):
         self._error = False

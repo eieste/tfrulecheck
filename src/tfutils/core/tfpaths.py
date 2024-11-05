@@ -7,9 +7,9 @@ from tfutils.core.exp import PathIsNotValid
 
 
 class TFPaths(AbstractCommand):
-    """Add an CLI argument to the command to Found .tf files
-    """
-    SEARCH_GLOB="**/*.tf"
+    """Add an CLI argument to the command to Found .tf files"""
+
+    SEARCH_GLOB = "**/*.tf"
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         """Add argument that consumes multiple filesystem paths.
@@ -20,9 +20,13 @@ class TFPaths(AbstractCommand):
         :rtype: argparse.ArgumentParser
         """
         parser = super(TFPaths, self).add_arguments(parser)
-        parser.add_argument("paths", nargs="+", type=pathlib.Path, help="Path to one or more TF-Files. Its also Possible to set a folder. It searches only *.tf files")
+        parser.add_argument(
+            "paths",
+            nargs="+",
+            type=pathlib.Path,
+            help="Path to one or more TF-Files. Its also Possible to set a folder. It searches only *.tf files",
+        )
         return parser
-
 
     def _get_files_from_path(self, path: pathlib.Path):
         """Resolves a given Path to a list of all matched files in it
@@ -52,5 +56,7 @@ class TFPaths(AbstractCommand):
             file_list += self._get_files_from_path(p)
 
         if len(file_list) <= 0:
-            self.get_logger().warning("The Search-Methoud found Zero files tha tcan be used by tfutils ")
+            self.get_logger().warning(
+                "The Search-Methoud found Zero files tha tcan be used by tfutils "
+            )
         return file_list

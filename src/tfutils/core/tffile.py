@@ -11,8 +11,7 @@ OpendTfFile = namedtuple("OpendTfFile", ("path", "lines", "parsed"))
 
 
 class TfUtilDecorator:
-
-    PARAM_REGEX = re.compile(r'(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?')
+    PARAM_REGEX = re.compile(r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
 
     def __init__(self, blockref, name, data):
         self._blockref = blockref
@@ -31,12 +30,14 @@ class TfUtilDecorator:
     def _parse(self, data):
         result = {}
         for regfind in TfUtilDecorator.PARAM_REGEX.findall(data):
-            result[regfind[0]] = regfind[1].strip("\"")
+            result[regfind[0]] = regfind[1].strip('"')
         return result
 
 
 class TfBlock:
-    DECORATOR_REGEX = re.compile(r'#\s?\@([a-z]+)(\((.*)\))?',)
+    DECORATOR_REGEX = re.compile(
+        r"#\s?\@([a-z]+)(\((.*)\))?",
+    )
 
     def __init__(self, fileref, id, block_data):
         self._fileref = fileref
@@ -108,25 +109,29 @@ class TfBlock:
                 return True
 
     def _find_decorators(self):
-        line_nr = self._start_line-2
+        line_nr = self._start_line - 2
         decorator_list = []
         while self.get_tf_file().lines[line_nr].strip().startswith("# @"):
             found_decorator = self.get_tf_file().lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
-            decorator_list.append(TfUtilDecorator(self, result.group(1), result.group(2)))
-            line_nr =- 1
+            decorator_list.append(
+                TfUtilDecorator(self, result.group(1), result.group(2))
+            )
+            line_nr = -1
 
         return decorator_list
 
 
 class TfFile:
-
     def __init__(self, path: pathlib.Path, autoparse=True):
         self.path = path
         self._blocks = None
         self._tf_file = self.read_tf(path)
         if autoparse:
             self.parse()
+
+    def __repr__(self):
+        return f"<TfFile path={self.path.absolute()} >"
 
     def get_tf_file(self):
         return self._tf_file
@@ -139,7 +144,7 @@ class TfFile:
 
     @staticmethod
     def _extend_name(previous_name, part):
-        return ".".join( [ key for key in  previous_name.split(".") + [part] if key ] )
+        return ".".join([key for key in previous_name.split(".") + [part] if key])
 
     @property
     def blocks(self):
@@ -154,18 +159,20 @@ class TfFile:
                 self._extract_blocks(block, block_type)
 
     def _extract_blocks(self, blockdata, name):
-        if isinstance(blockdata, dict) and any( [ key.startswith("__") for key in blockdata.keys() ]):
-
-            elem_names = [ key for key in blockdata.keys() if not key.startswith("__")]
+        if isinstance(blockdata, dict) and any(
+            [key.startswith("__") for key in blockdata.keys()]
+        ):
+            elem_names = [key for key in blockdata.keys() if not key.startswith("__")]
 
             if len(elem_names) > 1:
                 new_name = ""
             else:
                 new_name = elem_names[0]
 
-            self._blocks.append(TfBlock(self, self._extend_name(name, new_name), blockdata))
+            self._blocks.append(
+                TfBlock(self, self._extend_name(name, new_name), blockdata)
+            )
         else:
-
             if isinstance(blockdata, list):
                 for blockdata in blockdata:
                     self._extract_blocks(blockdata, name)

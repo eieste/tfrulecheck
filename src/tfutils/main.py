@@ -11,6 +11,7 @@ HandlerInfo = namedtuple("HandlerInfo", ("handler_cls", "handler_obj", "init_par
 
 log = logging.getLogger("tfutils")
 
+
 class TFUtils:
     handlers = [
         RemoteSourceHandler,
@@ -23,30 +24,32 @@ class TFUtils:
         self.commands = {}
 
     def _init_handlers(self, parser):
-
-        subparser = parser.add_subparsers(dest='command')
+        subparser = parser.add_subparsers(dest="command")
 
         for handler_cls in self.__class__.handlers:
             handler = handler_cls(self, parser)
             cmd_parser = handler._init(parser, subparser)
             handler.add_arguments(cmd_parser)
-            self.commands[handler.get_name()] = HandlerInfo(handler_cls, handler, cmd_parser)
+            self.commands[handler.get_name()] = HandlerInfo(
+                handler_cls, handler, cmd_parser
+            )
 
     def get_logger(self):
-         return log
+        return log
 
     def add_arguments(self, parser):
-        parser.add_argument('--verbose', '-v', action='count', default=1)
+        parser.add_argument("--verbose", "-v", action="count", default=1)
         return parser
 
     def _handle(self, options):
-        options.verbose = 40 - (10*options.verbose) if options.verbose > 0 else 0
-        logging.basicConfig(level=options.verbose, format='%(asctime)s %(levelname)s: %(message)s',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-
+        options.verbose = 40 - (10 * options.verbose) if options.verbose > 0 else 0
+        logging.basicConfig(
+            level=options.verbose,
+            format="%(asctime)s %(levelname)s: %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
 
         for name, handler in self.commands.items():
-
             if handler.handler_obj.itsme(options):
                 handler.handler_obj.handle(options)
 
@@ -58,14 +61,10 @@ class TFUtils:
         self._handle(options)
 
 
-
-
-
-
-
 def main():
     app = TFUtils()
     app.do()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
