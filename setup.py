@@ -20,10 +20,7 @@ setup(
     author_email="foss@ultraapp.de",
     url="https://github.com/eieste/tfutils.git",
     license="AGPLv3",
-    packages=find_packages(
-        where="src",
-        include=["tfutils*"],
-    ),
+    packages=find_packages(),
     package_dir={"": "src"},
     package_data={"tfutils": ["templates/*"]},
     include_package_data=True,
