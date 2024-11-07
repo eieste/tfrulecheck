@@ -1,5 +1,8 @@
 # TFUtils
 
+[![Validate](https://github.com/eieste/tfutils/actions/workflows/validate.yml/badge.svg)](https://github.com/eieste/tfutils/actions/workflows/validate.yml)
+
+
 provides different tools for Terraform Developers
 
 ## Installation
