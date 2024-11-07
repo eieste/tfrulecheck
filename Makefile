@@ -4,7 +4,7 @@ clean:
 	find . -name '*.py[co]' -delete
 
 virtualenv:
-	virtualenv --prompt '|> tfutils <| ' env
+	virtualenv --prompt '|> tfutility <| ' env
 	env/bin/pip install -r requirements-dev.txt
 	env/bin/python setup.py develop
 	@echo
@@ -14,13 +14,13 @@ virtualenv:
 test:
 	python -m pytest \
 		-v \
-		--cov=tfutils \
+		--cov=tfutility \
 		--cov-report=term \
 		--cov-report=html:coverage-report \
 		tests/
 
 docker: clean
-	docker build -t tfutils:latest .
+	docker build -t tfutility:latest .
 
 dist: clean
 	rm -rf dist/*

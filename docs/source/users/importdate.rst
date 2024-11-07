@@ -45,9 +45,9 @@ Terraform
    }
 
 .. argparse::
-   :module: tfutils.main
+   :module: tfutility.main
    :func: _get_parser_only
-   :prog: tfutils
+   :prog: tfutility
    :path: importdate
 
 

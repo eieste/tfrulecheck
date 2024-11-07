@@ -6,8 +6,8 @@ import tempfile
 
 import pytest
 
-from tfutils.core.exp import PathIsNotValid
-from tfutils.core.tfpaths import TFPaths
+from tfutility.core.exp import PathIsNotValid
+from tfutility.core.tfpaths import TFPaths
 
 
 def test_get_file_list_invalid_path(caplog):

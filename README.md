@@ -1,6 +1,6 @@
-# TFUtils
+# TfUtility
 
-[![Validate](https://github.com/eieste/tfutils/actions/workflows/validate.yml/badge.svg)](https://github.com/eieste/tfutils/actions/workflows/validate.yml)
+[![Validate](https://github.com/eieste/tfutility/actions/workflows/validate.yml/badge.svg)](https://github.com/eieste/tfutility/actions/workflows/validate.yml)
 
 
 provides different tools for Terraform Developers
@@ -8,7 +8,7 @@ provides different tools for Terraform Developers
 ## Installation
 
 ```
-$ pip install tfutils
+$ pip install tfutility
 ```
 
 # TF-Rule-Checker

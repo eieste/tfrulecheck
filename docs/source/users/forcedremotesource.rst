@@ -27,7 +27,7 @@ Example usage
 ``# @forcedremotesource``
 
 
-The following Code tells tfutils this module should have an remote source.
+The following Code tells tfutility this module should have an remote source.
 But as you can see the module has an local path 
 
 .. code-block:: hcl
@@ -56,7 +56,7 @@ This raises an version missing error
 .. code-block:: sh
    :linenos:
 
-   $ tfutils forcedremotesource test.tf
+   $ tfutility forcedremotesource test.tf
 
 
 Command Line Arguments
@@ -67,9 +67,9 @@ Usage in Terraform
 
 
 .. argparse::
-   :module: tfutils.main
+   :module: tfutility.main
    :func: _get_parser_only
-   :prog: tfutils
+   :prog: tfutility
    :path: forcedremotesource
 
 

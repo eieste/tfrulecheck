@@ -3,19 +3,19 @@ tffile
 ======
 
 
-.. autoclass:: tfutils.core.tffile.TfFile
+.. autoclass:: tfutility.core.tffile.TfFile
    :members:
    :inherited-members:
    :undoc-members:
 
 
-.. autoclass:: tfutils.core.tffile.TfBlock
+.. autoclass:: tfutility.core.tffile.TfBlock
    :members:
    :inherited-members:
    :undoc-members:
 
 
-.. autoclass:: tfutils.core.tffile.TfUtilDecorator
+.. autoclass:: tfutility.core.tffile.TfUtilDecorator
    :members:
    :inherited-members:
    :undoc-members:

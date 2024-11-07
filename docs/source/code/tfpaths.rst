@@ -2,7 +2,7 @@
 tfpaths
 =======
 
-.. autoclass:: tfutils.core.tfpaths.TfPaths
+.. autoclass:: tfutility.core.tfpaths.TfPaths
    :members:
    :inherited-members:
    :undoc-members:

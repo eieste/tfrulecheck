@@ -3,18 +3,18 @@ import argparse
 import logging
 from collections import namedtuple
 
-from tfutils.controllers.blockdate import ImportDateHandler, MovedDateHandler
-from tfutils.controllers.forcedremotesource import ForcedRemoteSourceHandler
-from tfutils.controllers.sourceswap import SourceSwapHandler
+from tfutility.controllers.blockdate import ImportDateHandler, MovedDateHandler
+from tfutility.controllers.forcedremotesource import ForcedRemoteSourceHandler
+from tfutility.controllers.sourceswap import SourceSwapHandler
 
 HandlerInfo = namedtuple("HandlerInfo", ("handler_cls", "handler_obj", "init_parser"))
 
-log = logging.getLogger("tfutils")
+log = logging.getLogger("tfutility")
 
 
-class TfUtils:
+class TfUtility:
     """
-    TfUtils Initial class. This class initializes all CLI arguments
+    TfUtility Initial class. This class initializes all CLI arguments
     """
 
     # List of all Available CLI Handlers
@@ -108,12 +108,12 @@ def _get_parser_only() -> argparse.ArgumentParser:
     """
     returns only the initialized parser
     """
-    app = TfUtils()
+    app = TfUtility()
     return app._init_parser()
 
 
 def main():
-    app = TfUtils()
+    app = TfUtility()
     app.do()
 
 
