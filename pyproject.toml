@@ -20,7 +20,6 @@ version = { file = "VERSION" }
 
 [project.optional-dependencies]
 dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit", "sphinx-argparse"]
-
 docs = ["sphinx", "sphinx-rtd-theme"]
 
 [tool.black]
