@@ -110,3 +110,8 @@ venv.bak/
 
 
 .pytest_cache
+
+
+node_modules/
+package.json
+package-lock.json
