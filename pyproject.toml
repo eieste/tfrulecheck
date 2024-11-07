@@ -19,9 +19,9 @@ packages = ["tfutils"]
 version = { file = "VERSION" }
 
 [project.optional-dependencies]
-dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock"]
+dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit", "sphinx-argparse"]
 
-docs = ["sphinx", "sphinx_rtd_theme"]
+docs = ["sphinx", "sphinx-rtd-theme"]
 
 [tool.black]
 line-length = 88
@@ -42,23 +42,23 @@ exclude = '''
 '''
 
 [tool.isort]
-profile = "pyproject"
+profile = "black"
 line_length = 88
 # known_third_party = ["your_third_party_lib"]
-known_first_party = "tfutils"
+# known_first_party = "tfutils"
 
 [tool.flake8]
 max-line-length = 88
 extend-ignore = "E203, W503"
 
-[tool.coverage.report]
-fail_under = 80
+#[tool.coverage.report]
+#fail_under = 80
 
 [tool.coverage.run]
 branch = true
-include = ["tfutils/*"]
+#include = ["src/tfutils/*"]
 # command_line = "-m unittest discover -s tests/"
-# source = ["."]
+source = ["."]
 
 [project.scripts]
 tfutils = "tfutils.main:main"

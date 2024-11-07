@@ -4,3 +4,5 @@ include README.md CHANGELOG.md LICENSE
 include VERSION
 include *.txt
 recursive-include src/tfutils/templates *
+
+recursive-include src/tfutils *

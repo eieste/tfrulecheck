@@ -1,0 +1,70 @@
+name: Validate
+
+on: [push]
+
+jobs:
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - uses: pre-commit/action@v3.0.1
+      with:
+        extra_args: "-a"
+
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install the code linting and formatting tool Ruff
+        run: pipx install ruff
+      - name: Lint code with Ruff
+        run: ruff check --output-format=github --target-version=py39
+      - name: Check code formatting with Ruff
+        run: ruff format --diff --target-version=py39
+        continue-on-error: true
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install -e .
+      - name: Test with pytest
+        run: |
+          pip install pytest pytest-cov
+          pytest . --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      # You can test your matrix by printing the current Python version
+      - name: Test Install
+        run: |
+          pip3 install .; 
+          tfutils --help

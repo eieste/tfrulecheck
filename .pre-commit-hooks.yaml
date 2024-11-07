@@ -1,6 +1,21 @@
--   id: check-tf
-    name: check tf
-    description: Check if custom rules are satisfied.
+-   id: check-forcedremotesource
+    name: forcedremoutesources
+    description: Check if all modules hase remote sources.
     entry: tfutils
+    args: ["forcedremotesource"]
+    language: python
+    files: (\.tf)$
+-   id: check-moveddate
+    name: forcedremoutesources
+    description: Check if all moved blocks has dates defined.
+    entry: tfutils
+    args: ["moveddate"]
+    language: python
+    files: (\.tf)$
+-   id: check-importdate
+    name: importdate
+    description: Check if all imports has dates defined
+    entry: tfutils
+    args: ["importdate"]
     language: python
     files: (\.tf)$
