@@ -20,3 +20,6 @@ success:
 
 fail:
   - "@semantic-release/github"
+
+
+repositoryUrl: https://github.com/eieste/tfutils.git
