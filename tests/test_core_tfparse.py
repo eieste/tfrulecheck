@@ -71,5 +71,5 @@ def test_find_decorators_found(mocker):
     x = nbw._find_decorators()
     assert x[0].get_name() == "fooo"
     assert len(x) == 1
-    assert x[0].get_parameter("bar") == "test"
-    assert x[0].get_parameter("party") == "hard"
+    assert x[0].parameter("bar") == "test"
+    assert x[0].parameter("party") == "hard"
