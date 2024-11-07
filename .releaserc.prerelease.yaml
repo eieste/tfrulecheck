@@ -22,4 +22,4 @@ fail:
   - "@semantic-release/github"
 
 
-repositoryUrl: git@github.com:eieste/tfutils.git
+repositoryUrl: git@github.com:eieste/tfutility.git

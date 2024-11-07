@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import hcl2
 
-from tfutils.core.tffile import OpendTfFile, TfBlock, TfFile
+from tfutility.core.tffile import OpendTfFile, TfBlock, TfFile
 
 
 def test_filemetadata_extract_blocks_simple(mocker):
-    mocker.patch("tfutils.core.tffile.TfFile.read_tf")
+    mocker.patch("tfutility.core.tffile.TfFile.read_tf")
     fm = TfFile("")
 
     fm._extract_blocks(
@@ -27,7 +27,7 @@ def test_filemetadata_extract_blocks_simple(mocker):
 
 
 def test_filemetadata_extract_blocks_more(mocker):
-    mocker.patch("tfutils.core.tffile.TfFile.read_tf")
+    mocker.patch("tfutility.core.tffile.TfFile.read_tf")
     fm = TfFile("")
 
     with open("./tests/testcode/main.tf", "r") as fobj:
@@ -49,7 +49,7 @@ def test_filemetadata_extract_blocks_more(mocker):
 
 def test_find_decorators_nothing_found(mocker):
     mocker.patch(
-        "tfutils.core.tffile.TfFile.read_tf",
+        "tfutility.core.tffile.TfFile.read_tf",
         return_value=OpendTfFile(None, ["a", "b", "c", "d"], None),
     )
     tff = TfFile("", autoparse=False)
@@ -59,7 +59,7 @@ def test_find_decorators_nothing_found(mocker):
 
 def test_find_decorators_found(mocker):
     mocker.patch(
-        "tfutils.core.tffile.TfFile.read_tf",
+        "tfutility.core.tffile.TfFile.read_tf",
         return_value=OpendTfFile(
             None,
             ['# @bar(bar="test")', "a", '# @fooo(bar="test", party="hard")', "c", "d"],

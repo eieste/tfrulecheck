@@ -5,16 +5,16 @@ from collections import namedtuple
 
 import hcl2
 
-from tfutils.contrib.deprecation import deprecated
+from tfutility.contrib.deprecation import deprecated
 
 # \#\s?\@([a-z]+)(\((.*)\))?
 
 OpendTfFile = namedtuple("OpendTfFile", ("path", "lines", "parsed"))
 
 
-class TfUtilDecorator:
+class TfUtilityDecorator:
     """
-    Represents a tfutils decorator used in tf files above blocks
+    Represents a tfutility decorator used in tf files above blocks
     """
 
     # Parses key="value", parameters ( used inside the decorator braces )
@@ -54,7 +54,7 @@ class TfUtilDecorator:
         :return: A dictionary of key-value pairs
         """
         result = {}
-        for regfind in TfUtilDecorator.PARAM_REGEX.findall(data):
+        for regfind in TfUtilityDecorator.PARAM_REGEX.findall(data):
             result[regfind[0]] = regfind[1].strip('"')
         return result
 
@@ -64,7 +64,7 @@ class TfBlock:
     Represents a block in a terraform file
     """
 
-    # Parses an tfutils decorator inside terraform files
+    # Parses an tfutility decorator inside terraform files
     DECORATOR_REGEX = re.compile(
         r"#\s?\@([a-z]+)(\((.*)\))?",
     )
@@ -150,7 +150,7 @@ class TfBlock:
     def content(self):
         return self._content
 
-    def get_decorator(self, name: str) -> TfUtilDecorator | None:
+    def get_decorator(self, name: str) -> TfUtilityDecorator | None:
         """
         find a decorator with the given name above the current block
 
@@ -198,7 +198,7 @@ class TfBlock:
             found_decorator = self.get_tfile().lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
-                TfUtilDecorator(self, result.group(1), result.group(2))
+                TfUtilityDecorator(self, result.group(1), result.group(2))
             )
             line_nr = -1
 

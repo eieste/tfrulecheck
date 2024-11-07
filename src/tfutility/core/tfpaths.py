@@ -2,8 +2,8 @@
 import argparse
 import pathlib
 
-from tfutils.core.abstract import AbstractCommand
-from tfutils.core.exp import PathIsNotValid
+from tfutility.core.abstract import AbstractCommand
+from tfutility.core.exp import PathIsNotValid
 
 
 class TFPaths(AbstractCommand):
@@ -57,6 +57,6 @@ class TFPaths(AbstractCommand):
 
         if len(file_list) <= 0:
             self.get_logger().warning(
-                "The Search-Methoud found Zero files tha tcan be used by tfutils "
+                "The Search-Methoud found Zero files tha tcan be used by tfutility "
             )
         return file_list

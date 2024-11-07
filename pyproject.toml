@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tfutils"
-description = "TFUtils provides different tools for Terraform Developers"
+name = "tfutility"
+description = "TfUtility provides different tools for Terraform Developers"
 dynamic = ["version"]
 readme = { file = 'README.md', content-type = 'text/markdown' }
 license = { file = 'LICENSE' }
@@ -13,7 +13,7 @@ dependencies = ["python-hcl2"]
 
 
 [tool.setuptools]
-packages = ["tfutils"]
+packages = ["tfutility"]
 
 [tool.setuptools.dynamic]
 version = { file = "VERSION" }
@@ -44,7 +44,7 @@ exclude = '''
 profile = "black"
 line_length = 88
 # known_third_party = ["your_third_party_lib"]
-# known_first_party = "tfutils"
+# known_first_party = "tfutility"
 
 [tool.flake8]
 max-line-length = 88
@@ -55,9 +55,9 @@ extend-ignore = "E203, W503"
 
 [tool.coverage.run]
 branch = true
-#include = ["src/tfutils/*"]
+#include = ["src/tfutility/*"]
 # command_line = "-m unittest discover -s tests/"
 source = ["."]
 
 [project.scripts]
-tfutils = "tfutils.main:main"
+tfutility = "tfutility.main:main"

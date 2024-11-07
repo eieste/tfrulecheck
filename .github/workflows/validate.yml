@@ -67,4 +67,4 @@ jobs:
       - name: Test Install
         run: |
           pip3 install .; 
-          tfutils --help
+          tfutility --help

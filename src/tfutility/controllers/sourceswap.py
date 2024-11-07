@@ -3,9 +3,9 @@ import enum
 import re
 import sys
 
-from tfutils.core.base import Command
-from tfutils.core.tffile import TfFile
-from tfutils.core.tfpaths import TFPaths
+from tfutility.core.base import Command
+from tfutility.core.tffile import TfFile
+from tfutility.core.tfpaths import TFPaths
 
 
 class SWITCH_DIRECTION(enum.Enum):

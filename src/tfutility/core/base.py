@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 
-from tfutils.core.abstract import AbstractCommand
+from tfutility.core.abstract import AbstractCommand
 
 
 class Command(AbstractCommand):

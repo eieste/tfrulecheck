@@ -15,7 +15,7 @@ on:
       - completed
       
 jobs:
-      push-tfutils-image:
+      push-tfutility-image:
         runs-on: ubuntu-latest
         defaults:
           run:
@@ -33,6 +33,6 @@ jobs:
 
           - name: 'Build Inventory Image'
             run: |
-              docker build . --tag ghcr.io/eieste/tfutils:latest
-              docker push ghcr.io/eieste/tfutils:latest
+              docker build . --tag ghcr.io/eieste/tfutility:latest
+              docker push ghcr.io/eieste/tfutility:latest
 
