@@ -15,3 +15,6 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
+   users/index.rst
+   code/index.rst
+

@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflow: Validate
+    workflows: [validate]
     branches: [main]
     types: 
       - completed

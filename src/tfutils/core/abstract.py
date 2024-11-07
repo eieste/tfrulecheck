@@ -3,14 +3,27 @@ import argparse
 
 
 class AbstractCommand:
-    def __init__(self, parent, parser):
+    """
+    An abstract class definition for custom CLI Commands
+    """
+
+    def __init__(self, parent, parser: argparse.ArgumentParser):
         self._cmd = parent
         self.parser = parser
 
     def _init(self):
+        """
+        Intialize an subparser for this command
+        normaly it has the name of this command
+        """
         raise NotImplementedError("Please Implement an _init method")
 
     def get_logger(self):
+        """
+
+        :return: The logger from the main class
+
+        """
         return self._cmd.get_logger()
 
     def add_arguments(self, parser: argparse.ArgumentParser):

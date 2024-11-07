@@ -5,29 +5,54 @@ from collections import namedtuple
 
 import hcl2
 
+from tfutils.contrib.deprecation import deprecated
+
 # \#\s?\@([a-z]+)(\((.*)\))?
 
 OpendTfFile = namedtuple("OpendTfFile", ("path", "lines", "parsed"))
 
 
 class TfUtilDecorator:
+    """
+    Represents a tfutils decorator used in tf files above blocks
+    """
+
+    # Parses key="value", parameters ( used inside the decorator braces )
     PARAM_REGEX = re.compile(r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
 
-    def __init__(self, blockref, name, data):
+    def __init__(self, blockref, name: str, data):
         self._blockref = blockref
         self._name = name
         self._data = data
         self._parameter = None
 
-    def get_parameter(self, key, default=None):
+    def parameter(self, key: str, default=None):
+        """
+        Returns the value of a given parameter or the default value if the parameter is not set
+
+        :param key: The name of the parameter
+        :param default: The default value to return if the parameter is not set
+        :return: The value of the parameter or the default value if the parameter is not set
+        """
         if self._parameter is None:
             self._parameter = self._parse(self._data)
         return self._parameter.get(key, default)
 
+    @deprecated
     def get_name(self):
         return self._name
 
-    def _parse(self, data):
+    @property
+    def name(self):
+        return self._name
+
+    def _parse(self, data: str):
+        """
+        Parses the given data string and returns a dictionary of key-value pairs
+
+        :param data: The data string to parse
+        :return: A dictionary of key-value pairs
+        """
         result = {}
         for regfind in TfUtilDecorator.PARAM_REGEX.findall(data):
             result[regfind[0]] = regfind[1].strip('"')
@@ -35,11 +60,23 @@ class TfUtilDecorator:
 
 
 class TfBlock:
+    """
+    Represents a block in a terraform file
+    """
+
+    # Parses an tfutils decorator inside terraform files
     DECORATOR_REGEX = re.compile(
         r"#\s?\@([a-z]+)(\((.*)\))?",
     )
 
-    def __init__(self, fileref, id, block_data):
+    def __init__(self, fileref, id: str, block_data: dict):
+        """
+        Initializes a new instance of the TfBlock class
+
+        :param fileref: The reference to TfFile which contains this block
+        :param id: The id of the block. usaly tfblocktype.blocktype.blockname
+        :param block_data: The data of the block as parsed by hcl2
+        """
         self._fileref = fileref
         self._id = id
         self._decorators = None
@@ -49,10 +86,22 @@ class TfBlock:
 
     @property
     def start(self):
+        """
+        Start linenumber of the block
+
+        :return: The start linenumber of the block
+        :rtype: int
+        """
         return self._start_line
 
     @property
     def end(self):
+        """
+        End linenumber of the block
+
+        :return: The end linenumber of the block
+        :rtype: int
+        """
         return self._end_line
 
     def __str__(self):
@@ -60,13 +109,6 @@ class TfBlock:
 
     def __repr__(self):
         return f"<BlockWrapper id={self._id}>"
-
-    @property
-    def id(self):
-        return self._id
-
-    def get_tf_file(self):
-        return self._fileref.get_tf_file()
 
     def __eq__(self, value: object) -> bool:
         self._start_line == value._start_line
@@ -87,10 +129,36 @@ class TfBlock:
         return self.start >= other.start
 
     @property
+    def id(self):
+        """
+        id of the block. usually tfblocktype.blocktype.blockname
+
+        :return: The id of the block
+        :rtype: str
+        """
+        return self._id
+
+    @deprecated
+    def get_tfile(self):
+        return self._fileref.get_tf_file()
+
+    @property
+    def tffile(self):
+        return self._fileref.get_tf_file()
+
+    @property
     def content(self):
         return self._content
 
-    def get_decorator(self, name):
+    def get_decorator(self, name: str) -> TfUtilDecorator | None:
+        """
+        find a decorator with the given name above the current block
+
+        :param name: The name of the decorator to find
+        :type name: str
+        :return: The decorator with the given name or None if not found
+        :rtype: TfUtilDecorator
+        """
         for dec in self.decorators:
             if dec.get_name() == name:
                 return dec
@@ -101,18 +169,33 @@ class TfBlock:
             self._decorators = self._find_decorators()
         return self._decorators
 
-    def has_decorator(self, name):
+    def has_decorator(self, name: str) -> bool:
+        """
+        Check if this block has a decorator with the given name
+
+        :param name: The name of the decorator to check for
+        :type name: str
+        :return: True if the block has a decorator with the given name, False otherwise
+        :rtype: bool
+        """
         if self._decorators is None:
             self._decorators = self._find_decorators()
         for dec in self._decorators:
             if dec.get_name() == name:
                 return True
+        return False
 
     def _find_decorators(self):
+        """
+        search in the file for decorators above this block
+
+        :return: A list of decorators found above this block
+        :rtype: list[TfUtilDecorator]
+        """
         line_nr = self._start_line - 2
         decorator_list = []
-        while self.get_tf_file().lines[line_nr].strip().startswith("# @"):
-            found_decorator = self.get_tf_file().lines[line_nr].strip()
+        while self.get_tfile().lines[line_nr].strip().startswith("# @"):
+            found_decorator = self.get_tfile().lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
                 TfUtilDecorator(self, result.group(1), result.group(2))
@@ -136,14 +219,14 @@ class TfFile:
     def get_tf_file(self):
         return self._tf_file
 
-    def read_tf(self, path):
+    def read_tf(self, path: pathlib.Path):
         with path.open("r") as fobj:
             lines = [line.rstrip() for line in fobj]
             fobj.seek(0)
             return OpendTfFile(path, lines, hcl2.load(fobj, with_meta=True))
 
     @staticmethod
-    def _extend_name(previous_name, part):
+    def _extend_name(previous_name: str, part: str):
         return ".".join([key for key in previous_name.split(".") + [part] if key])
 
     @property
@@ -158,7 +241,7 @@ class TfFile:
             for block in blocks:
                 self._extract_blocks(block, block_type)
 
-    def _extract_blocks(self, blockdata, name):
+    def _extract_blocks(self, blockdata: dict, name: str):
         if isinstance(blockdata, dict) and any(
             [key.startswith("__") for key in blockdata.keys()]
         ):
@@ -180,7 +263,7 @@ class TfFile:
                 for key, value in blockdata.items():
                     self._extract_blocks(value, self._extend_name(name, key))
 
-    def get_blocks_with_decorator(self, name):
+    def get_blocks_with_decorator(self, name: str):
         result = []
         for block in self.blocks:
             if block.has_decorator(name):

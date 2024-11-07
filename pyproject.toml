@@ -19,9 +19,9 @@ packages = ["tfutils"]
 version = { file = "VERSION" }
 
 [project.optional-dependencies]
-dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit"]
+dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit", "sphinx-argparse"]
 
-docs = ["sphinx", "sphinx_rtd_theme"]
+docs = ["sphinx", "sphinx-rtd-theme"]
 
 [tool.black]
 line-length = 88
