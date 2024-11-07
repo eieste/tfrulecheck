@@ -1,1 +1,2 @@
 python-hcl2==4.3.5
+setuptools
