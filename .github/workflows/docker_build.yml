@@ -6,7 +6,7 @@ env:
 
 on:
   release:
-    types: [published]
+    types: [created]
 
 jobs:
       push-tfutils-image:
