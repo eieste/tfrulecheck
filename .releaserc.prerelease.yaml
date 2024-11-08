@@ -4,6 +4,7 @@ plugins:
   - "@semantic-release/changelog"
   - "@semantic-release/github"
   - "@semantic-release/git"
+  - "@semantic-release/exec"
 
 branches:
   - main
@@ -11,6 +12,8 @@ branches:
 prepare:
   - path: "@semantic-release/changelog"
     changelogFile: "CHANGELOG.md"
+  - path: "@semantic-release/exec"
+    cmd: "echo ${nextRelease.version} > VERSION"
 
 publish:
   - path: "@semantic-release/github"
