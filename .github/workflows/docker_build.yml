@@ -33,4 +33,4 @@ jobs:
 
           - name: 'Build Inventory Image'
             run: |
-              docker build . --push --tag ghcr.io/eieste/tfutility:latest --tag ghcr.io/eieste/tfutility:$(cat /VERSION)
+              docker build . --push --tag ghcr.io/eieste/tfutility:latest --tag ghcr.io/eieste/tfutility:$(cat VERSION)
