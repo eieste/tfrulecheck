@@ -36,7 +36,7 @@ class BlockDateHandler(TFPaths, Command):
         return self.block_name
 
     def new_block(self, options, block):
-        file_path = block.get_tf_file().path
+        file_path = block.tffile.path
 
         dec = block.get_decorator(self.get_name())
 

@@ -21,3 +21,11 @@
     args: ["importdate"]
     language: python
     files: (\.tf)$
+
+-   id: check-forcedremotesource-docker
+    name: forcedremotesource
+    description: Check if all modules hase remote sources
+    args: ["importdate"]
+    language: docker_image
+    entry: ghcr.io/eieste/tfutility:latest forcedremotesource
+    files: (\.tf)$

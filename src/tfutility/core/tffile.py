@@ -140,11 +140,11 @@ class TfBlock:
 
     @deprecated
     def get_tfile(self):
-        return self._fileref.get_tf_file()
+        return self._fileref.tffile
 
     @property
     def tffile(self):
-        return self._fileref.get_tf_file()
+        return self._fileref.tffile
 
     @property
     def content(self):
@@ -216,7 +216,7 @@ class TfFile:
     def __repr__(self):
         return f"<TfFile path={self.path.absolute()} >"
 
-    def get_tf_file(self):
+    def get_tffile(self):
         return self._tf_file
 
     def read_tf(self, path: pathlib.Path):
@@ -273,5 +273,5 @@ class TfFile:
     def write_back(self):
         with self.path.open("r+") as fobj:
             fobj.truncate()
-            for line in self.get_tf_file().lines:
+            for line in self.tffile.lines:
                 fobj.write(f"{line}\n")

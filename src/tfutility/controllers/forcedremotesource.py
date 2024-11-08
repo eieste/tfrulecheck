@@ -23,7 +23,7 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
         return parser
 
     def new_decorator(self, options, block):
-        file_path = block.get_tf_file().path
+        file_path = block.tffile.path
         if not block.id.startswith("module"):
             self.get_logger().error(
                 "The decorator @forcedremotesource can only applied to modules"
