@@ -5,6 +5,7 @@
     args: ["forcedremotesource"]
     language: python
     files: (\.tf)$
+
 -   id: check-moveddate
     name: forcedremoutesources
     description: Check if all moved blocks has dates defined.
@@ -12,6 +13,7 @@
     args: ["moveddate"]
     language: python
     files: (\.tf)$
+
 -   id: check-importdate
     name: importdate
     description: Check if all imports has dates defined
