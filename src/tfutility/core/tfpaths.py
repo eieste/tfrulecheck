@@ -6,7 +6,7 @@ from tfutility.core.abstract import AbstractCommand
 from tfutility.core.exp import PathIsNotValid
 
 
-class TFPaths(AbstractCommand):
+class TfPaths(AbstractCommand):
     """Add an CLI argument to the command to Found .tf files"""
 
     SEARCH_GLOB = "**/*.tf"
@@ -19,7 +19,7 @@ class TFPaths(AbstractCommand):
         :return: Tthe argument parser enriched with arguments
         :rtype: argparse.ArgumentParser
         """
-        parser = super(TFPaths, self).add_arguments(parser)
+        parser = super(TfPaths, self).add_arguments(parser)
         parser.add_argument(
             "paths",
             nargs="+",
@@ -57,6 +57,6 @@ class TFPaths(AbstractCommand):
 
         if len(file_list) <= 0:
             self.get_logger().warning(
-                "The Search-Methoud found Zero files tha tcan be used by tfutility "
+                "The Search-Methoud found Zero files that can be used by tfutility "
             )
         return file_list

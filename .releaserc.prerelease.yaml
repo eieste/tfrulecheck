@@ -13,10 +13,11 @@ prepare:
   - path: "@semantic-release/changelog"
     changelogFile: "CHANGELOG.md"
   - path: "@semantic-release/exec"
-    cmd: "echo ${nextRelease.version} > VERSION"
+    cmd: "./.github/release.bash ${lastRelease.version} ${nextRelease.version}"
   - path: "@semantic-release/git"
     assets:
-      - VERSION
+      - src/tfutility/__init__.py
+      - README.md
       - CHANELOG.md
 
 publish:

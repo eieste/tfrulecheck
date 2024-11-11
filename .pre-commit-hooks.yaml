@@ -27,5 +27,5 @@
     description: Check if all modules hase remote sources
     args: ["importdate"]
     language: docker_image
-    entry: ghcr.io/eieste/tfutility:latest forcedremotesource
+    entry: ghcr.io/eieste/tfutility:1.0.9 forcedremotesource
     files: (\.tf)$

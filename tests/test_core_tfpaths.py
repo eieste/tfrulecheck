@@ -7,7 +7,7 @@ import tempfile
 import pytest
 
 from tfutility.core.exp import PathIsNotValid
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
 def test_get_file_list_invalid_path(caplog):
@@ -18,7 +18,7 @@ def test_get_file_list_invalid_path(caplog):
             log = logging.getLogger()
             return log
 
-    test = TFPaths(Foo(), parser)
+    test = TfPaths(Foo(), parser)
     with pytest.raises(PathIsNotValid, match="Path does not exist"):
         test.get_file_list(
             [
@@ -50,4 +50,4 @@ def test_add_arguments():
             log = logging.getLogger()
             return log
 
-    TFPaths(Foo(), parser)
+    TfPaths(Foo(), parser)

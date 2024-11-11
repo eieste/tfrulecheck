@@ -18,7 +18,8 @@ class TfUtilityDecorator:
     """
 
     # Parses key="value", parameters ( used inside the decorator braces )
-    PARAM_REGEX = re.compile(r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
+    PARAM_REGEX = re.compile(
+        r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
 
     def __init__(self, blockref, name: str, data):
         self._blockref = blockref
@@ -160,7 +161,7 @@ class TfBlock:
         :rtype: TfUtilDecorator
         """
         for dec in self.decorators:
-            if dec.get_name() == name:
+            if dec.name == name:
                 return dec
 
     @property
@@ -181,7 +182,7 @@ class TfBlock:
         if self._decorators is None:
             self._decorators = self._find_decorators()
         for dec in self._decorators:
-            if dec.get_name() == name:
+            if dec.name == name:
                 return True
         return False
 
@@ -194,8 +195,8 @@ class TfBlock:
         """
         line_nr = self._start_line - 2
         decorator_list = []
-        while self.get_tfile().lines[line_nr].strip().startswith("# @"):
-            found_decorator = self.get_tfile().lines[line_nr].strip()
+        while self.tffile.lines[line_nr].strip().startswith("# @"):
+            found_decorator = self.tffile.lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
                 TfUtilityDecorator(self, result.group(1), result.group(2))
@@ -216,6 +217,11 @@ class TfFile:
     def __repr__(self):
         return f"<TfFile path={self.path.absolute()} >"
 
+    @property
+    def tffile(self):
+        return self._tf_file
+
+    @deprecated
     def get_tffile(self):
         return self._tf_file
 
@@ -245,7 +251,8 @@ class TfFile:
         if isinstance(blockdata, dict) and any(
             [key.startswith("__") for key in blockdata.keys()]
         ):
-            elem_names = [key for key in blockdata.keys() if not key.startswith("__")]
+            elem_names = [key for key in blockdata.keys()
+                          if not key.startswith("__")]
 
             if len(elem_names) > 1:
                 new_name = ""

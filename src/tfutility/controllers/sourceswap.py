@@ -5,7 +5,7 @@ import sys
 
 from tfutility.core.base import Command
 from tfutility.core.tffile import TfFile
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
 class SWITCH_DIRECTION(enum.Enum):
@@ -13,7 +13,7 @@ class SWITCH_DIRECTION(enum.Enum):
     TO_REMOTE = 2
 
 
-class SourceSwapHandler(TFPaths, Command):
+class SourceSwapHandler(TfPaths, Command):
     name = "sourceswap"
     help = "Allows to switch module Sources. Between a Local and Remote Path"
 
@@ -32,7 +32,8 @@ class SourceSwapHandler(TFPaths, Command):
         file_path = block.tffile.path
         if not block.id.startswith("module"):
             self.get_logger().error(
-                f"The decorator @sourceswap applied to wrong blocktype in {file_path}:{block.start}"
+                f"The decorator @sourceswap applied to wrong blocktype in {
+                    file_path}:{block.start}"
             )
             sys.exit(1)
 
@@ -54,8 +55,8 @@ class SourceSwapHandler(TFPaths, Command):
                 version_line = li
 
         if switch_to is SWITCH_DIRECTION.TO_REMOTE:
-            remote_source = dec.get_parameter("remote_source")
-            remote_version = dec.get_parameter("remote_version")
+            remote_source = dec.parameter("remote_source")
+            remote_version = dec.parameter("remote_version")
 
             block.tffile.lines[source_line] = re.sub(
                 r"source\s*\=\s*\"(.*)\"",
@@ -75,7 +76,7 @@ class SourceSwapHandler(TFPaths, Command):
                 )
 
         else:
-            local_source = dec.get_parameter("local_source")
+            local_source = dec.parameter("local_source")
             block.tffile.lines[source_line] = re.sub(
                 r"source\s*\=\s*\"(.*)\"",
                 f'source = "{local_source}"',
@@ -90,9 +91,10 @@ class SourceSwapHandler(TFPaths, Command):
         dec = block.get_decorator(self.get_name())
         general_error = False
         for param_key in ["remote_source", "remote_version", "local_source"]:
-            if not dec.get_parameter(param_key):
+            if not dec.parameter(param_key):
                 self.get_logger().error(
-                    f"Decorator {self.get_name()} {file_path}:{block.start} requires the parameters remote_source, remote_version, local_source"
+                    f"Decorator {self.get_name()} {file_path}:{
+                        block.start} requires the parameters remote_source, remote_version, local_source"
                 )
                 general_error = True
 

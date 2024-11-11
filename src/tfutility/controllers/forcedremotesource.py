@@ -3,10 +3,10 @@ import sys
 
 from tfutility.core.base import Command
 from tfutility.core.tffile import TfFile
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
-class ForcedRemoteSourceHandler(TFPaths, Command):
+class ForcedRemoteSourceHandler(TfPaths, Command):
     name = "forcedremotesource"
     help = "Check if a RemoteSource was set"
 
@@ -35,13 +35,15 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
         if not block_content.get("version"):
             self._error = True
             self.get_logger().error(
-                f"Module Block had no Version Defined in {file_path}:{block.start}"
+                f"Module Block had no Version Defined in {
+                    file_path}:{block.start}"
             )
 
         if block_content.get("source")[0] == ".":
             self._error = True
             self.get_logger().error(
-                f"Module Block has no Remote Source in {file_path}:{block.start}"
+                f"Module Block has no Remote Source in {
+                    file_path}:{block.start}"
             )
 
     def handle(self, options):

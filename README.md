@@ -17,7 +17,7 @@ $ pip install tfutility
 ## Docker
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:latest forcedremotesource /workspace
+docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:1.0.9 forcedremotesource /workspace
 ```
 
 # TF-Rule-Checker
