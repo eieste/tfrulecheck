@@ -48,5 +48,5 @@ jobs:
       with:
         name: versionandchangelog
         path: |
-          VERSION
           CHANGELOG.md
+          README.md
