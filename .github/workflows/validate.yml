@@ -14,7 +14,6 @@ jobs:
         run: |
           pip3 install .[dev]
           pip3 install .
-
       - name: Sphinx build
         run: |
           cd docs
