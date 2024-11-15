@@ -4,6 +4,22 @@ on: [push]
 
 jobs:
 
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: Install dependencies
+        run: |
+          pip3 install -r requirements-dev.txt
+          pip3 install .
+      - name: Sphinx build
+        run: |
+          cd docs
+          make html SPHINXOPTS="-W"
+  
+
   pre-commit:
     runs-on: ubuntu-latest
     steps:

@@ -1,2 +1,0 @@
-python-hcl2==4.3.5
-setuptools==70.0.0
