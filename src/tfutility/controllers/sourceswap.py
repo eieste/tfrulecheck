@@ -32,8 +32,9 @@ class SourceSwapHandler(TfPaths, Command):
         file_path = block.tffile.path
         if not block.id.startswith("module"):
             self.get_logger().error(
-                f"The decorator @sourceswap applied to wrong blocktype in {
-                    file_path}:{block.start}"
+                "The decorator @sourceswap applied to wrong blocktype in {}:{}".format(
+                    file_path, block.start
+                )
             )
             sys.exit(1)
 
@@ -93,8 +94,9 @@ class SourceSwapHandler(TfPaths, Command):
         for param_key in ["remote_source", "remote_version", "local_source"]:
             if not dec.parameter(param_key):
                 self.get_logger().error(
-                    f"Decorator {self.get_command_name()} {file_path}:{
-                        block.start} requires the parameters remote_source, remote_version, local_source"
+                    "Decorator {} {}:{} requires the parameters remote_source, remote_version, local_source".format(
+                        self.get_command_name(), file_path, block.start
+                    )
                 )
                 general_error = True
 
