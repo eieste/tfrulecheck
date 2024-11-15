@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import argparse
 import logging
+import sys
 from collections import namedtuple
 
+import tfutility
 from tfutility.controllers.blockdate import ImportDateHandler, MovedDateHandler
 from tfutility.controllers.forcedremotesource import ForcedRemoteSourceHandler
 from tfutility.controllers.sourceswap import SourceSwapHandler
@@ -64,6 +66,7 @@ class TfUtility:
         :return: the main argparser with attached global arguments
         """
         parser.add_argument("--verbose", "-v", action="count", default=1)
+        parser.add_argument("-V", "--version", action="store_true")
         return parser
 
     def _handle(self, options: argparse.Namespace):
@@ -81,6 +84,10 @@ class TfUtility:
             format="%(asctime)s %(levelname)s: %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
         )
+
+        if options.version:
+            print(tfutility.__version__)
+            sys.exit(0)
 
         # find command which is used by user
         for name, handler in self.commands.items():

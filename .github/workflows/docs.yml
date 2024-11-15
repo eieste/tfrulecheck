@@ -21,12 +21,12 @@ jobs:
       - uses: actions/setup-python@v5
       - name: Install dependencies
         run: |
-          pip install -r requirements-dev.txt
-          pip install .
+          pip3 install '.[dev]'
+          pip3 install .
       - name: Sphinx build
         run: |
           cd docs
-          make html
+          make html SPHINXOPTS="-W"
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

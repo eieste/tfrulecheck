@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'TF-Utils'
+project = 'TfUtility'
 copyright = '2024, Stefan Eiermann'
 author = 'Stefan Eiermann'
 
@@ -16,6 +16,7 @@ author = 'Stefan Eiermann'
 extensions = [
     'sphinxarg.ext',
     'sphinx.ext.autodoc',
+    'sphinx_toolbox.pre_commit'
 
 ]
 
