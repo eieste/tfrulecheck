@@ -17,6 +17,7 @@ jobs:
       - name: Sphinx build
         run: |
           cd docs
+          sphinx-build --version
           make html SPHINXOPTS="-W"
   
 
