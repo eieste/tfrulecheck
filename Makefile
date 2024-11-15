@@ -2,6 +2,12 @@
 
 clean:
 	find . -name '*.py[co]' -delete
+	find . -name '__pycache__' -delete
+	rm -rf src/*.egg-info
+	rm -rf '.pytest_cache'
+	find . -name '.coverage' -delete
+	find . -name 'coverage.xml' -delete
+	find . -name 'package*.json' -delete
 
 virtualenv:
 	virtualenv --prompt '|> tfutility <| ' env

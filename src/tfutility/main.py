@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import annotations
+
 import argparse
 import logging
 from collections import namedtuple
@@ -41,9 +44,7 @@ class TfUtility:
             handler = handler_cls(self, parser)
             cmd_parser = handler._init(parser, subparser)
             handler.add_arguments(cmd_parser)
-            self.commands[handler.get_name()] = HandlerInfo(
-                handler_cls, handler, cmd_parser
-            )
+            self.commands[handler.name] = HandlerInfo(handler_cls, handler, cmd_parser)
 
     def get_logger(self) -> logging.Logger:
         """

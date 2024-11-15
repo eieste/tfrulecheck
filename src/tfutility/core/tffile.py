@@ -7,8 +7,6 @@ import hcl2
 
 from tfutility.contrib.deprecation import deprecated
 
-# \#\s?\@([a-z]+)(\((.*)\))?
-
 OpendTfFile = namedtuple("OpendTfFile", ("path", "lines", "parsed"))
 
 
@@ -21,6 +19,15 @@ class TfUtilityDecorator:
     PARAM_REGEX = re.compile(r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
 
     def __init__(self, blockref, name: str, data):
+        """Initializes a Decorator of an TfBlock
+
+        :param blockref: Reference to the TfBlock which is decorated
+        :type blockref: TfBlock
+        :param name: Name of the Decorator ( the word after the @ sign )
+        :type name: str
+        :param data: Content form inside the braces of the Decorator
+        :type data: str
+        """
         self._blockref = blockref
         self._name = name
         self._data = data
@@ -140,11 +147,11 @@ class TfBlock:
 
     @deprecated
     def get_tfile(self):
-        return self._fileref.get_tf_file()
+        return self._fileref.tffile
 
     @property
     def tffile(self):
-        return self._fileref.get_tf_file()
+        return self._fileref.tffile
 
     @property
     def content(self):
@@ -160,7 +167,7 @@ class TfBlock:
         :rtype: TfUtilDecorator
         """
         for dec in self.decorators:
-            if dec.get_name() == name:
+            if dec.name == name:
                 return dec
 
     @property
@@ -181,7 +188,7 @@ class TfBlock:
         if self._decorators is None:
             self._decorators = self._find_decorators()
         for dec in self._decorators:
-            if dec.get_name() == name:
+            if dec.name == name:
                 return True
         return False
 
@@ -194,8 +201,8 @@ class TfBlock:
         """
         line_nr = self._start_line - 2
         decorator_list = []
-        while self.get_tfile().lines[line_nr].strip().startswith("# @"):
-            found_decorator = self.get_tfile().lines[line_nr].strip()
+        while self.tffile.lines[line_nr].strip().startswith("# @"):
+            found_decorator = self.tffile.lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
                 TfUtilityDecorator(self, result.group(1), result.group(2))
@@ -216,7 +223,12 @@ class TfFile:
     def __repr__(self):
         return f"<TfFile path={self.path.absolute()} >"
 
-    def get_tf_file(self):
+    @property
+    def tffile(self):
+        return self._tf_file
+
+    @deprecated
+    def get_tffile(self):
         return self._tf_file
 
     def read_tf(self, path: pathlib.Path):
@@ -273,5 +285,5 @@ class TfFile:
     def write_back(self):
         with self.path.open("r+") as fobj:
             fobj.truncate()
-            for line in self.get_tf_file().lines:
+            for line in self.tffile.lines:
                 fobj.write(f"{line}\n")

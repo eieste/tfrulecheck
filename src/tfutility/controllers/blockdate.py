@@ -4,12 +4,12 @@ from datetime import datetime, timedelta
 
 from tfutility.core.base import Command
 from tfutility.core.tffile import TfFile
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
-class BlockDateHandler(TFPaths, Command):
+class BlockDateHandler(TfPaths, Command):
     block_name = None
-    name = None
+    command_name = None
     help = None  # "Check if a import-blocks has a date comment"
 
     def add_arguments(self, parser):
@@ -36,34 +36,41 @@ class BlockDateHandler(TFPaths, Command):
         return self.block_name
 
     def new_block(self, options, block):
-        file_path = block.get_tf_file().path
+        file_path = block.tffile.path
 
-        dec = block.get_decorator(self.get_name())
+        dec = block.get_decorator(self.get_command_name())
 
         if dec is None:
             self._error = True
+            block_name = self.get_block_name()
             self.get_logger().error(
-                f"Missing moveddate Decorator at block '{self.get_block_name()}' in file {file_path} Line {block.start}"
+                "Missing moveddate Decorator at block '{}' in file {} Line {}".format(
+                    block_name, file_path, block.start
+                )
             )
         else:
             now = datetime.now()
-            dec_date_create = datetime.strptime(dec.get_parameter("create"), "%d-%m-%Y")
+            dec_date_create = datetime.strptime(dec.parameter("create"), "%d-%m-%Y")
 
             if not options.expire_after:
-                if dec.get_parameter("expire"):
+                if dec.parameter("expire"):
                     dec_date_expire = datetime.strptime(
-                        dec.get_parameter("expire"), "%d-%m-%Y"
+                        dec.parameter("expire"), "%d-%m-%Y"
                     )
                     if now > dec_date_expire:
                         self._error = True
                         self.get_logger().error(
-                            f"Moved Block expired in file: {file_path} Line {block.start}"
+                            "Moved Block expired in file: {} Line {}".format(
+                                file_path, block.start
+                            )
                         )
             else:
                 if now > dec_date_create + timedelta(days=options.expire_after):
                     self._error = True
                     self.get_logger().error(
-                        f"Moved Block expired in file: {file_path} Line {block.start}"
+                        "Moved Block expired in file: {} Line {}".format(
+                            file_path, block.start
+                        )
                     )
 
     def handle(self, options):
@@ -87,11 +94,11 @@ class BlockDateHandler(TFPaths, Command):
 
 class ImportDateHandler(BlockDateHandler):
     block_name = "import"
-    name = "importdate"
+    command_name = "importdate"
     help = "Check if a import-blocks has a date comment"
 
 
 class MovedDateHandler(BlockDateHandler):
     block_name = "moved"
-    name = "moveddate"
+    command_name = "moveddate"
     help = "Check if a moved-blocks has a date comment"

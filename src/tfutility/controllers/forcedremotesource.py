@@ -3,11 +3,11 @@ import sys
 
 from tfutility.core.base import Command
 from tfutility.core.tffile import TfFile
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
-class ForcedRemoteSourceHandler(TFPaths, Command):
-    name = "forcedremotesource"
+class ForcedRemoteSourceHandler(TfPaths, Command):
+    command_name = "forcedremotesource"
     help = "Check if a RemoteSource was set"
 
     def add_arguments(self, parser):
@@ -23,7 +23,7 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
         return parser
 
     def new_decorator(self, options, block):
-        file_path = block.get_tf_file().path
+        file_path = block.tffile.path
         if not block.id.startswith("module"):
             self.get_logger().error(
                 "The decorator @forcedremotesource can only applied to modules"
@@ -35,13 +35,17 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
         if not block_content.get("version"):
             self._error = True
             self.get_logger().error(
-                f"Module Block had no Version Defined in {file_path}:{block.start}"
+                "Module Block had no Version Defined in {}:{}".format(
+                    file_path, block.start
+                )
             )
 
         if block_content.get("source")[0] == ".":
             self._error = True
             self.get_logger().error(
-                f"Module Block has no Remote Source in {file_path}:{block.start}"
+                "Module Block has no Remote Source in {}:{}".format(
+                    file_path, block.start
+                )
             )
 
     def handle(self, options):
@@ -54,7 +58,7 @@ class ForcedRemoteSourceHandler(TFPaths, Command):
         for file in tf_files:
             file = TfFile(file)
 
-            for block in file.get_blocks_with_decorator(self.get_name()):
+            for block in file.get_blocks_with_decorator(self.get_command_name()):
                 self.new_decorator(self, block)
 
         if not options.allow_failure and self._error:

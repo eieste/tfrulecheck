@@ -5,7 +5,7 @@ import sys
 
 from tfutility.core.base import Command
 from tfutility.core.tffile import TfFile
-from tfutility.core.tfpaths import TFPaths
+from tfutility.core.tfpaths import TfPaths
 
 
 class SWITCH_DIRECTION(enum.Enum):
@@ -13,8 +13,8 @@ class SWITCH_DIRECTION(enum.Enum):
     TO_REMOTE = 2
 
 
-class SourceSwapHandler(TFPaths, Command):
-    name = "sourceswap"
+class SourceSwapHandler(TfPaths, Command):
+    command_name = "sourceswap"
     help = "Allows to switch module Sources. Between a Local and Remote Path"
 
     def add_arguments(self, parser):
@@ -29,14 +29,16 @@ class SourceSwapHandler(TFPaths, Command):
         return parser
 
     def block_switch_to(self, options, block, dec, switch_to):
-        file_path = block.get_tf_file().path
+        file_path = block.tffile.path
         if not block.id.startswith("module"):
             self.get_logger().error(
-                f"The decorator @sourceswap applied to wrong blocktype in {file_path}:{block.start}"
+                "The decorator @sourceswap applied to wrong blocktype in {}:{}".format(
+                    file_path, block.start
+                )
             )
             sys.exit(1)
 
-        lines = block.get_tf_file().lines
+        lines = block.tffile.lines
         source_line = -1
         version_line = -1
         source_indent = ""
@@ -54,45 +56,47 @@ class SourceSwapHandler(TFPaths, Command):
                 version_line = li
 
         if switch_to is SWITCH_DIRECTION.TO_REMOTE:
-            remote_source = dec.get_parameter("remote_source")
-            remote_version = dec.get_parameter("remote_version")
+            remote_source = dec.parameter("remote_source")
+            remote_version = dec.parameter("remote_version")
 
-            block.get_tf_file().lines[source_line] = re.sub(
+            block.tffile.lines[source_line] = re.sub(
                 r"source\s*\=\s*\"(.*)\"",
                 f'source = "{remote_source}"',
-                block.get_tf_file().lines[source_line],
+                block.tffile.lines[source_line],
             )
 
             if version_line == -1:
-                block.get_tf_file().lines.insert(
+                block.tffile.lines.insert(
                     source_line, f'{source_indent}version = "{remote_version}"'
                 )
             else:
-                block.get_tf_file().lines[source_line] = re.sub(
+                block.tffile.lines[source_line] = re.sub(
                     r"version\s*\=\s*\"(.*)\"",
                     f'version = "{remote_version}"',
-                    block.get_tf_file().lines[source_line],
+                    block.tffile.lines[source_line],
                 )
 
         else:
-            local_source = dec.get_parameter("local_source")
-            block.get_tf_file().lines[source_line] = re.sub(
+            local_source = dec.parameter("local_source")
+            block.tffile.lines[source_line] = re.sub(
                 r"source\s*\=\s*\"(.*)\"",
                 f'source = "{local_source}"',
-                block.get_tf_file().lines[source_line],
+                block.tffile.lines[source_line],
             )
 
             if version_line > 0:
-                del block.get_tf_file().lines[version_line]
+                del block.tffile.lines[version_line]
 
     def get_decorator(self, block):
-        file_path = block.get_tf_file().path
-        dec = block.get_decorator(self.get_name())
+        file_path = block.tffile.path
+        dec = block.get_decorator(self.get_command_name())
         general_error = False
         for param_key in ["remote_source", "remote_version", "local_source"]:
-            if not dec.get_parameter(param_key):
+            if not dec.parameter(param_key):
                 self.get_logger().error(
-                    f"Decorator {self.get_name()} {file_path}:{block.start} requires the parameters remote_source, remote_version, local_source"
+                    "Decorator {} {}:{} requires the parameters remote_source, remote_version, local_source".format(
+                        self.get_command_name(), file_path, block.start
+                    )
                 )
                 general_error = True
 
@@ -116,7 +120,7 @@ class SourceSwapHandler(TFPaths, Command):
         for file in tf_files:
             file = TfFile(file)
 
-            for block in file.get_blocks_with_decorator(self.get_name()):
+            for block in file.get_blocks_with_decorator(self.get_command_name()):
                 dec = self.get_decorator(block)
                 self.block_switch_to(options, block, dec, switch_to)
             file.write_back()

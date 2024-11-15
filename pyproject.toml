@@ -16,7 +16,8 @@ dependencies = ["python-hcl2"]
 packages = ["tfutility"]
 
 [tool.setuptools.dynamic]
-version = { file = "VERSION" }
+version = {attr = "tfutility.__version__"}
+
 
 [project.optional-dependencies]
 dev = ["pre-commit", "sphinx-autobuild", "coverage", "pytest", "pytest-mock", "pre-commit", "sphinx-argparse"]

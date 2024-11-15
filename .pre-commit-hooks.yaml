@@ -21,3 +21,28 @@
     args: ["importdate"]
     language: python
     files: (\.tf)$
+
+-   id: check-forcedremotesource-docker
+    name: forcedremotesource
+    description: Check if all modules hase remote sources
+    args: ["importdate"]
+    language: docker_image
+    entry: ghcr.io/eieste/tfutility:1.0.9 forcedremotesource
+    files: (\.tf)$
+
+
+-   id: check-importdate-docker
+    name: importdate
+    description: Check if import block has decorated dates
+    args: ["importdate"]
+    language: docker_image
+    entry: ghcr.io/eieste/tfutility:1.0.9 importdate
+    files: (\.tf)$
+
+-   id: check-movedate-docker
+    name: movedate
+    description: Check if moved block has decorated dates
+    args: ["importdate"]
+    language: docker_image
+    entry: ghcr.io/eieste/tfutility:1.0.9 movedate
+    files: (\.tf)$

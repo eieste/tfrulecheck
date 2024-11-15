@@ -15,7 +15,7 @@ tffile
    :undoc-members:
 
 
-.. autoclass:: tfutility.core.tffile.TfUtilDecorator
+.. autoclass:: tfutility.core.tffile.TfUtilityDecorator
    :members:
    :inherited-members:
    :undoc-members:

@@ -27,7 +27,6 @@ resource "aws_s3_bucket_object" "object2" {
 }
 
 
-
 # @forcedremotesource
 module "testmodule_localsource" {
   source = "../../"
