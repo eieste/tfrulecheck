@@ -35,15 +35,17 @@ class ForcedRemoteSourceHandler(TfPaths, Command):
         if not block_content.get("version"):
             self._error = True
             self.get_logger().error(
-                f"Module Block had no Version Defined in {
-                    file_path}:{block.start}"
+                "Module Block had no Version Defined in {}:{}".format(
+                    file_path, block.start
+                )
             )
 
         if block_content.get("source")[0] == ".":
             self._error = True
             self.get_logger().error(
-                f"Module Block has no Remote Source in {
-                    file_path}:{block.start}"
+                "Module Block has no Remote Source in {}:{}".format(
+                    file_path, block.start
+                )
             )
 
     def handle(self, options):
