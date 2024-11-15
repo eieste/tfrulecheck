@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
       - name: Install dependencies
         run: |
-          pip3 install .[dev]
+          pip3 install '.[dev]'
           pip3 install .
       - name: Sphinx build
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip3 install .[dev]
+          pip3 install '.[dev]'
           pip3 install .
       - name: Test with pytest
         run: |
@@ -83,6 +83,6 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Test Install
         run: |
-          pip3 install .[dev]
+          pip3 install '.[dev]'
           pip3 install .
           tfutility --help
