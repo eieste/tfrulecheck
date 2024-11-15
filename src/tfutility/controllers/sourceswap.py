@@ -14,7 +14,7 @@ class SWITCH_DIRECTION(enum.Enum):
 
 
 class SourceSwapHandler(TfPaths, Command):
-    name = "sourceswap"
+    command_name = "sourceswap"
     help = "Allows to switch module Sources. Between a Local and Remote Path"
 
     def add_arguments(self, parser):
@@ -88,12 +88,12 @@ class SourceSwapHandler(TfPaths, Command):
 
     def get_decorator(self, block):
         file_path = block.tffile.path
-        dec = block.get_decorator(self.get_name())
+        dec = block.get_decorator(self.get_command_name())
         general_error = False
         for param_key in ["remote_source", "remote_version", "local_source"]:
             if not dec.parameter(param_key):
                 self.get_logger().error(
-                    f"Decorator {self.get_name()} {file_path}:{
+                    f"Decorator {self.get_command_name()} {file_path}:{
                         block.start} requires the parameters remote_source, remote_version, local_source"
                 )
                 general_error = True
@@ -118,7 +118,7 @@ class SourceSwapHandler(TfPaths, Command):
         for file in tf_files:
             file = TfFile(file)
 
-            for block in file.get_blocks_with_decorator(self.get_name()):
+            for block in file.get_blocks_with_decorator(self.get_command_name()):
                 dec = self.get_decorator(block)
                 self.block_switch_to(options, block, dec, switch_to)
             file.write_back()

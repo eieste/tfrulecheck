@@ -15,7 +15,7 @@ class Command(AbstractCommand):
     ) -> argparse.ArgumentParser:
         if parser is None:
             parser = self.parser
-        return subparser.add_parser(self.get_name(), help=self.get_help())
+        return subparser.add_parser(self.get_command_name(), help=self.get_help())
 
     # Overwrite this method to attach Arguments to the existing parser
     def add_arguments(

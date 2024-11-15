@@ -7,7 +7,7 @@ from tfutility.core.tfpaths import TfPaths
 
 
 class ForcedRemoteSourceHandler(TfPaths, Command):
-    name = "forcedremotesource"
+    command_name = "forcedremotesource"
     help = "Check if a RemoteSource was set"
 
     def add_arguments(self, parser):
@@ -56,7 +56,7 @@ class ForcedRemoteSourceHandler(TfPaths, Command):
         for file in tf_files:
             file = TfFile(file)
 
-            for block in file.get_blocks_with_decorator(self.get_name()):
+            for block in file.get_blocks_with_decorator(self.get_command_name()):
                 self.new_decorator(self, block)
 
         if not options.allow_failure and self._error:

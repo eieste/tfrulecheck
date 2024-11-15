@@ -9,7 +9,7 @@ from tfutility.core.tfpaths import TfPaths
 
 class BlockDateHandler(TfPaths, Command):
     block_name = None
-    name = None
+    command_name = None
     help = None  # "Check if a import-blocks has a date comment"
 
     def add_arguments(self, parser):
@@ -38,7 +38,7 @@ class BlockDateHandler(TfPaths, Command):
     def new_block(self, options, block):
         file_path = block.tffile.path
 
-        dec = block.get_decorator(self.get_name())
+        dec = block.get_decorator(self.get_command_name())
 
         if dec is None:
             self._error = True
@@ -48,8 +48,7 @@ class BlockDateHandler(TfPaths, Command):
             )
         else:
             now = datetime.now()
-            dec_date_create = datetime.strptime(
-                dec.parameter("create"), "%d-%m-%Y")
+            dec_date_create = datetime.strptime(dec.parameter("create"), "%d-%m-%Y")
 
             if not options.expire_after:
                 if dec.parameter("expire"):
@@ -91,11 +90,11 @@ class BlockDateHandler(TfPaths, Command):
 
 class ImportDateHandler(BlockDateHandler):
     block_name = "import"
-    name = "importdate"
+    command_name = "importdate"
     help = "Check if a import-blocks has a date comment"
 
 
 class MovedDateHandler(BlockDateHandler):
     block_name = "moved"
-    name = "moveddate"
+    command_name = "moveddate"
     help = "Check if a moved-blocks has a date comment"

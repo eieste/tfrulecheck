@@ -7,8 +7,6 @@ import hcl2
 
 from tfutility.contrib.deprecation import deprecated
 
-# \#\s?\@([a-z]+)(\((.*)\))?
-
 OpendTfFile = namedtuple("OpendTfFile", ("path", "lines", "parsed"))
 
 
@@ -18,10 +16,18 @@ class TfUtilityDecorator:
     """
 
     # Parses key="value", parameters ( used inside the decorator braces )
-    PARAM_REGEX = re.compile(
-        r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
+    PARAM_REGEX = re.compile(r"(\b\w+)(?:=((?:\"[^\"\\]*(?:\\.[^\"\\]*)*\"|\w+)))?")
 
     def __init__(self, blockref, name: str, data):
+        """Initializes a Decorator of an TfBlock
+
+        :param blockref: Reference to the TfBlock which is decorated
+        :type blockref: TfBlock
+        :param name: Name of the Decorator ( the word after the @ sign )
+        :type name: str
+        :param data: Content form inside the braces of the Decorator
+        :type data: str
+        """
         self._blockref = blockref
         self._name = name
         self._data = data
@@ -251,8 +257,7 @@ class TfFile:
         if isinstance(blockdata, dict) and any(
             [key.startswith("__") for key in blockdata.keys()]
         ):
-            elem_names = [key for key in blockdata.keys()
-                          if not key.startswith("__")]
+            elem_names = [key for key in blockdata.keys() if not key.startswith("__")]
 
             if len(elem_names) > 1:
                 new_name = ""

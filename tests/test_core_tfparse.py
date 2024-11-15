@@ -69,7 +69,7 @@ def test_find_decorators_found(mocker):
     tff = TfFile("", autoparse=False)
     nbw = TfBlock(tff, "foo", {"__start_line__": 4, "__end_line__": 5})
     x = nbw._find_decorators()
-    assert x[0].get_name() == "fooo"
+    assert x[0].name == "fooo"
     assert len(x) == 1
     assert x[0].parameter("bar") == "test"
     assert x[0].parameter("party") == "hard"
