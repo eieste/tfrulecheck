@@ -42,9 +42,9 @@ class BlockDateHandler(TfPaths, Command):
 
         if dec is None:
             self._error = True
+            block_name = self.get_block_name()
             self.get_logger().error(
-                f"Missing moveddate Decorator at block '{self.get_block_name()}' in file {
-                    file_path} Line {block.start}"
+                f"Missing moveddate Decorator at block '{block_name}' in file {file_path} Line {block.start}"
             )
         else:
             now = datetime.now()
