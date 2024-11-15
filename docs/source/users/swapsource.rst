@@ -9,20 +9,18 @@ Terraform
 
 
 .. code-block:: hcl
-   :lineos:
-   :caption:
+   :linenos:
 
-   @swapsource(remote_source="", remote_version="", local_source="")
+   # @swapsource(remote_source="", remote_version="", local_source="")
    module {
       source = ""
    }
 
 
 .. code-block:: hcl
-   :lineos:
-   :caption:
+   :linenos:
 
-   @swapsource(remote_source="", remote_version="", local_source="")
+   # @swapsource(remote_source="", remote_version="", local_source="")
    module {
       source = ""
       version = ""
