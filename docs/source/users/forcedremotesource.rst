@@ -7,7 +7,7 @@ It is usefull in pre-commit hooks and development scenatios.
    
 
 
-**Szenario:**
+*Szenario:*
 
 You are developing a large terraform/tofu project with different modules thre are pushed to an terraform module registry.
 But for development purposes you linked the module localy together.
@@ -21,10 +21,10 @@ Terraform
 
 Write the following Decorator above modules to enforce this module must have a local path to his source.
 
-This decorator works only above ``module`` blocks. It has no additional parameters
+This decorator works only above `module` blocks. It has no additional parameters
 
 Example usage
-``# @forcedremotesource``
+`# @forcedremotesource`
 
 
 The following Code tells tfutility this module should have an remote source.

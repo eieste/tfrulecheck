@@ -12,8 +12,7 @@ Terraform
 
 
 .. code-block:: hcl
-   :lineos:
-   :caption:
+   :linenos:
 
    import {
       to = ""
@@ -23,10 +22,9 @@ Terraform
 
 
 .. code-block:: hcl
-   :lineos:
-   :caption:
+   :linenos:
 
-   @importdate(start="01-01-1970")
+   # @importdate(start="01-01-1970")
    import {
       to = ""
       id = ""
@@ -35,14 +33,26 @@ Terraform
 
 
 .. code-block:: hcl
-   :lineos:
-   :caption:
+   :linenos:
 
-   @importdate(start="01-01-1970", expire="19-01-2038")
+   # @importdate(start="01-01-1970", expire="19-01-2038")
    import {
       to = ""
       id = ""
    }
+
+
+
+you can also overwrite the expire date with your own duration like:
+```bash
+tfutility moveddate --expire-after 60 /workspace
+```
+The `--expire-after` value is in Days.
+
+If --allow-failure is not set the Application wil exit with `exitcode` 1
+and without --silent it logs all expired moved blocks
+
+
 
 .. argparse::
    :module: tfutility.main
