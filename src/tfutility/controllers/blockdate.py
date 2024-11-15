@@ -60,15 +60,17 @@ class BlockDateHandler(TfPaths, Command):
                     if now > dec_date_expire:
                         self._error = True
                         self.get_logger().error(
-                            f"Moved Block expired in file: {
-                                file_path} Line {block.start}"
+                            "Moved Block expired in file: {} Line {}".format(
+                                file_path, block.start
+                            )
                         )
             else:
                 if now > dec_date_create + timedelta(days=options.expire_after):
                     self._error = True
                     self.get_logger().error(
-                        f"Moved Block expired in file: {
-                            file_path} Line {block.start}"
+                        "Moved Block expired in file: {} Line {}".format(
+                            file_path, block.start
+                        )
                     )
 
     def handle(self, options):

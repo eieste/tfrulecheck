@@ -1,6 +1,6 @@
 FROM python:3.13-alpine
 
-LABEL org.opencontainers.image.description="Image with TfUtility. Build for amd64 Architecture based on Alpine." 
+LABEL org.opencontainers.image.description="Image with TfUtility. Build for amd64 Architecture based on Alpine."
 LABEL org.opencontainers.image.licenses=AGPLv3
 LABEL org.opencontainers.image.source=https://github.com/eieste/tfutility
 
