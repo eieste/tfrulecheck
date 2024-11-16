@@ -46,7 +46,9 @@ class TfUtility:
             handler = handler_cls(self, parser)
             cmd_parser = handler._init(parser, subparser)
             handler.add_arguments(cmd_parser)
-            self.commands[handler.name] = HandlerInfo(handler_cls, handler, cmd_parser)
+            self.commands[handler.command_name] = HandlerInfo(
+                handler_cls, handler, cmd_parser
+            )
 
     def get_logger(self) -> logging.Logger:
         """
@@ -84,7 +86,6 @@ class TfUtility:
             format="%(asctime)s %(levelname)s: %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
         )
-
         if options.version:
             print(tfutility.__version__)
             sys.exit(0)

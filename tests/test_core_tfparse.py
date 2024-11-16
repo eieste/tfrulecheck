@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import pathlib
+import tempfile
+
 import hcl2
 
 from tfutility.core.tffile import OpendTfFile, TfBlock, TfFile
@@ -43,7 +46,6 @@ def test_filemetadata_extract_blocks_more(mocker):
         "module.testmodule_remotesource.source",
         "moved",
     ]
-    print(fm._blocks)
     assert all([block.id in targets for block in fm._blocks])
 
 
@@ -73,3 +75,39 @@ def test_find_decorators_found(mocker):
     assert len(x) == 1
     assert x[0].parameter("bar") == "test"
     assert x[0].parameter("party") == "hard"
+
+
+def test_tffile(mocker):
+    VALID_TF = """
+        # @foobardecorator
+        foobarblock "test" {
+            source = "foo.com/test"
+            version = "0.0.1"
+        }
+    """
+    valid_temp = tempfile.NamedTemporaryFile(suffix=".tf", delete=False)
+    valid_temp.write(VALID_TF.encode("utf-8"))
+    valid_temp.close()
+
+    tmpfile = pathlib.Path(valid_temp.name)
+    f = TfFile(tmpfile)
+
+    assert f.tffile.path == tmpfile
+    assert len(f.tffile.lines) == 7
+
+    assert f.tffile.parsed == {
+        "foobarblock": [
+            {
+                "test": {
+                    "source": "foo.com/test",
+                    "version": "0.0.1",
+                    "__start_line__": 3,
+                    "__end_line__": 6,
+                }
+            }
+        ]
+    }
+
+    assert len(f.blocks) == 1
+    assert f.blocks[0].id == "foobarblock.test"
+    assert len(f.blocks[0].decorators) == 1

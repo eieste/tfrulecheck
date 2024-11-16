@@ -50,6 +50,7 @@ class ForcedRemoteSourceHandler(TfPaths, Command):
 
     def handle(self, options):
         self._error = False
+
         if options.silent:
             self.get_logger().setLevel(1000)
 

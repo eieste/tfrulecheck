@@ -1,15 +1,8 @@
-.. TF-Utils documentation master file, created by
-   sphinx-quickstart on Sun Nov  3 09:06:25 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-TF-Utils documentation
+tfutility documentation
 ======================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+ tfutility allows performing commands on terraform/tofu files. This commands can be different things. Currently, there are possibilities to check if a module block has remote sources. Or import or moved blocks have creation dates on them. 
 
 .. toctree::
    :maxdepth: 2

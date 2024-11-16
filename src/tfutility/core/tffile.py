@@ -277,6 +277,7 @@ class TfFile:
 
     def get_blocks_with_decorator(self, name: str):
         result = []
+
         for block in self.blocks:
             if block.has_decorator(name):
                 result.append(block)

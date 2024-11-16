@@ -27,7 +27,7 @@
     description: Check if all modules hase remote sources
     args: ["importdate"]
     language: docker_image
-    entry: ghcr.io/eieste/tfutility:1.0.9 forcedremotesource
+    entry: ghcr.io/eieste/tfutility:1.1.1 forcedremotesource
     files: (\.tf)$
 
 
@@ -36,7 +36,7 @@
     description: Check if import block has decorated dates
     args: ["importdate"]
     language: docker_image
-    entry: ghcr.io/eieste/tfutility:1.0.9 importdate
+    entry: ghcr.io/eieste/tfutility:1.1.1 importdate
     files: (\.tf)$
 
 -   id: check-movedate-docker
@@ -44,5 +44,5 @@
     description: Check if moved block has decorated dates
     args: ["importdate"]
     language: docker_image
-    entry: ghcr.io/eieste/tfutility:1.0.9 movedate
+    entry: ghcr.io/eieste/tfutility:1.1.1 movedate
     files: (\.tf)$

@@ -1,8 +1,8 @@
 #!/bin/sh
 
 
+pip install -e '.[dev]'
 pip install -e .
-pip3 install -r requirements-dev.txt
 
 
 exec $@

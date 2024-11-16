@@ -7,7 +7,7 @@ echo "Replace Version inside tfutility"
 echo "__version__= \"$2\"" > src/tfutility/__init__.py
 
 echo "Replace Docker image Reference inside README.md"
-sed -i "s/tfutility:$1/tfutility:$1/" README.md
+sed -i "s/tfutility:$1/tfutility:$2/" README.md
 
 echo "Replace Docker image Reference inside pre-commit-hook"
 sed -i "s/tfutility:$1/tfutility:$1/" .pre-commit-hooks.yaml
