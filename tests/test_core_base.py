@@ -104,6 +104,7 @@ def test_cmd_handle(mocker):
             version = "0.0.1"
         }
     """
+
     valid_temp = tempfile.NamedTemporaryFile(suffix=".tf")
     valid_temp.write(VALID_TF.encode("utf-8"))
     testoptions = argparse.Namespace(

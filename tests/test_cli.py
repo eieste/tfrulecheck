@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 import re
 import tempfile
 
@@ -25,7 +26,7 @@ def test_version(capsys, mocker):
     assert sysexit.call_count == 1
 
 
-def test_forcedremotesource(capsys, mocker):
+def test_forcedremotesource(mocker, caplog):
     INVALID_TF = """
         # @forcedremotesource
         module "test" {
@@ -40,20 +41,21 @@ def test_forcedremotesource(capsys, mocker):
             version = "0.0.1"
         }
     """
-    valid_temp = tempfile.NamedTemporaryFile(suffix="tf")
+    caplog.set_level(logging.INFO)
+
+    valid_temp = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
     valid_temp.write(VALID_TF.encode("utf-8"))
+    valid_temp.close()
 
-    invalid_temp = tempfile.NamedTemporaryFile(suffix="tf")
+    invalid_temp = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
     invalid_temp.write(INVALID_TF.encode("utf-8"))
+    invalid_temp.close()
 
+    # "tfutility",
     mocker.patch("sys.argv", ["tfutility", "forcedremotesource", invalid_temp.name])
     sysexit = mocker.patch("sys.exit")
     main()
-    captured = capsys.readouterr()
 
-    assert captured.out == "foo"
-
+    assert "Module Block has no" in caplog.text
+    assert sysexit.call_args.args == (1,)
     assert sysexit.call_count == 1
-
-
-#    assert VESION_REGEX.match(captured.out) is not None

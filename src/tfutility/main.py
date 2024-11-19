@@ -7,6 +7,8 @@ import logging
 import sys
 from collections import namedtuple
 
+import argcomplete
+
 import tfutility
 from tfutility.controllers.blockdate import ImportDateHandler, MovedDateHandler
 from tfutility.controllers.forcedremotesource import ForcedRemoteSourceHandler
@@ -18,9 +20,7 @@ log = logging.getLogger("tfutility")
 
 
 class TfUtility:
-    """
-    TfUtility Initial class. This class initializes all CLI arguments
-    """
+    """TfUtility Initial class. This class initializes all CLI arguments"""
 
     # List of all Available CLI Handlers
     handlers = [
@@ -34,8 +34,7 @@ class TfUtility:
         self.commands = {}
 
     def _init_handlers(self, parser: argparse.ArgumentParser):
-        """
-        initialize all cli argparse commands
+        """Initialize all cli argparse commands
 
         :type parser: argparse.ArgumentParser
         :param parser: the main argparser
@@ -51,8 +50,7 @@ class TfUtility:
             )
 
     def get_logger(self) -> logging.Logger:
-        """
-        get logger instance
+        """Get logger instance
 
         :return: the logger instance
         :rtype: logging.Logger
@@ -60,8 +58,7 @@ class TfUtility:
         return log
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
-        """
-        Add global arguments to the parser
+        """Add global arguments to the parser
 
         :param parser: the main argparser
         :type parser: argparse.ArgumentParser
@@ -72,8 +69,7 @@ class TfUtility:
         return parser
 
     def _handle(self, options: argparse.Namespace):
-        """
-        handle the cli arguments
+        """Handle the cli arguments
 
         :param options: the parsed cli arguments
         :type options: argparse.Namespace
@@ -90,25 +86,27 @@ class TfUtility:
             print(tfutility.__version__)
             sys.exit(0)
 
+        flag_command_found = False
         # find command which is used by user
         for name, handler in self.commands.items():
             if handler.handler_obj.itsme(options):
                 handler.handler_obj.handle(options)
+                flag_command_found = True
+
+        if not flag_command_found:
+            log.error("tfutility: missing command")
 
     def _init_parser(self) -> argparse.ArgumentParser:
-        """
-        Create the main Parser with all subparsers arguments
-        """
+        """Create the main Parser with all subparsers arguments"""
         parser = argparse.ArgumentParser()
         parser = self.add_arguments(parser)
         self._init_handlers(parser)
         return parser
 
     def do(self):
-        """
-        Execute command execution
-        """
+        """Execute command execution"""
         parser = self._init_parser()
+        argcomplete.autocomplete(parser)
         options = parser.parse_args()
         self._handle(options)
 

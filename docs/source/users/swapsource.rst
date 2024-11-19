@@ -26,10 +26,6 @@ Terraform
       version = ""
    }
 
-
-
-
-
 .. argparse::
    :module: tfutility.main
    :func: _get_parser_only
