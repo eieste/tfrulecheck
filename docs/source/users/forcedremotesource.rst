@@ -42,7 +42,7 @@ But as you can see the module has an local path
 shell:
 
 .. code-block:: bash
-   :lineos:
+   :linenos:
 
    tfutility forcedremotesource test.tf
    ERROR: Module Block had no Version Defined in main.tf:4

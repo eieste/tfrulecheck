@@ -26,7 +26,7 @@ def test_version(capsys, mocker):
     assert sysexit.call_count == 1
 
 
-def test_forcedremotesource(mocker, caplog):
+def test_forcedremotesource_local_source(mocker, caplog):
     INVALID_TF = """
         # @forcedremotesource
         module "test" {
@@ -34,6 +34,22 @@ def test_forcedremotesource(mocker, caplog):
         }
     """
 
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(INVALID_TF.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch("sys.argv", ["tfutility", "forcedremotesource", tmpfile.name])
+    sysexit = mocker.patch("sys.exit")
+    main()
+
+    assert "Module Block has no" in caplog.text
+    assert sysexit.call_args.args == (1,)
+    assert sysexit.call_count == 1
+
+
+def test_forcedremotesource_remotesource(mocker, caplog):
     VALID_TF = """
         # @forcedremotesource
         module "test" {
@@ -43,19 +59,84 @@ def test_forcedremotesource(mocker, caplog):
     """
     caplog.set_level(logging.INFO)
 
-    valid_temp = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
-    valid_temp.write(VALID_TF.encode("utf-8"))
-    valid_temp.close()
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(VALID_TF.encode("utf-8"))
+    tmpfile.close()
 
-    invalid_temp = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
-    invalid_temp.write(INVALID_TF.encode("utf-8"))
-    invalid_temp.close()
+    sysexit = mocker.patch("sys.exit")
 
-    # "tfutility",
-    mocker.patch("sys.argv", ["tfutility", "forcedremotesource", invalid_temp.name])
+    mocker.patch("sys.argv", ["tfutility", "forcedremotesource", tmpfile.name])
     sysexit = mocker.patch("sys.exit")
     main()
 
-    assert "Module Block has no" in caplog.text
+    assert "" in caplog.text
+    assert sysexit.call_count == 0
+
+
+def test_importdate_missing_decorator(mocker, caplog):
+    MISSING_TF = """
+        import {
+            id = ""
+            from = ""
+        }
+    """
+
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(MISSING_TF.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch("sys.argv", ["tfutility", "importdate", tmpfile.name])
+    sysexit = mocker.patch("sys.exit")
+    main()
+
+    assert "Missing importdate Decorator above block" in caplog.text
     assert sysexit.call_args.args == (1,)
     assert sysexit.call_count == 1
+
+
+def test_importdate_invaliddate(mocker, caplog):
+    INVALID_DATE = """
+        # @importdate(create="04-10-2019")
+        import {
+            id = ""
+            from = ""
+        }
+    """
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(INVALID_DATE.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch(
+        "sys.argv", ["tfutility", "importdate", "--expire-after", "10", tmpfile.name]
+    )
+    sysexit = mocker.patch("sys.exit")
+    main()
+
+    assert sysexit.call_args.args == (1,)
+    assert "importdate Block expired " in caplog.text
+
+
+def test_importdate_expirede(mocker, caplog):
+    INVALID_DATE = """
+        # @importdate(create="04-10-2019", expire="20-12-2019")
+        import {
+            id = ""
+            from = ""
+        }
+    """
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(INVALID_DATE.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch("sys.argv", ["tfutility", "importdate", tmpfile.name])
+    sysexit = mocker.patch("sys.exit")
+    main()
+
+    assert sysexit.call_args.args == (1,)
+    assert "importdate Block expired " in caplog.text

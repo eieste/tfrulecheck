@@ -44,8 +44,8 @@ class BlockDateHandler(TfPaths, Command):
             self._error = True
             block_name = self.get_block_name()
             self.get_logger().error(
-                "Missing moveddate Decorator at block '{}' in file {} Line {}".format(
-                    block_name, file_path, block.start
+                "Missing {} Decorator above block '{}' in file {}:{}".format(
+                    self.get_command_name(), block_name, file_path, block.start
                 )
             )
         else:
@@ -54,31 +54,32 @@ class BlockDateHandler(TfPaths, Command):
 
             if not options.expire_after:
                 if dec.parameter("expire"):
+                    print("HIII")
+
                     dec_date_expire = datetime.strptime(
                         dec.parameter("expire"), "%d-%m-%Y"
                     )
                     if now > dec_date_expire:
+                        print("FOOOHIII")
+
                         self._error = True
                         self.get_logger().error(
-                            "Moved Block expired in file: {} Line {}".format(
-                                file_path, block.start
+                            "{} Block expired in file: {}:{}".format(
+                                self.get_command_name(), file_path, block.start
                             )
                         )
             else:
                 if now > dec_date_create + timedelta(days=options.expire_after):
                     self._error = True
                     self.get_logger().error(
-                        "Moved Block expired in file: {} Line {}".format(
-                            file_path, block.start
+                        "{} Block expired in file: {}:{}".format(
+                            self.get_command_name(), file_path, block.start
                         )
                     )
 
     def handle(self, options):
         self._error = False
         results = super(BlockDateHandler, self).handle(options)
-
-        if not options.allow_failure and self._error:
-            sys.exit(1)
 
         tf_files = self.get_file_list(options.paths)
 
@@ -88,6 +89,9 @@ class BlockDateHandler(TfPaths, Command):
             for block in file.blocks:
                 if block.id.startswith(self.get_block_name()):
                     self.new_block(options, block)
+
+        if not options.allow_failure and self._error:
+            sys.exit(1)
 
         return results
 
