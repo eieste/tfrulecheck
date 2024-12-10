@@ -51,6 +51,9 @@ class TfUtilityDecorator:
 
     @property
     def name(self):
+        """
+        Name of the Decorator ( string after @ sign without arguments from braces text )
+        """
         return self._name
 
     def _parse(self, data: str):
@@ -112,27 +115,39 @@ class TfBlock:
         return self._end_line
 
     def __str__(self):
-        return self._id
+        return self.id
 
     def __repr__(self):
-        return f"<BlockWrapper id={self._id}>"
+        return f"<TfBlock id={self._id}>"
 
-    def __eq__(self, value: object) -> bool:
-        self._start_line == value._start_line
+    def __eq__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
+        return self._start_line == other._start_line
 
-    def __lt__(self, other):
+    def __lt__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
         return self.start < other.start
 
-    def __le__(self, other):
+    def __le__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
         return self.start >= other.start
 
-    def __ne__(self, other):
+    def __ne__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
         return self.start != other.start
 
-    def __gt__(self, other):
+    def __gt__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
         return self.start > other.start
 
-    def __ge__(self, other):
+    def __ge__(self, other: "TfBlock") -> bool:
+        if not isinstance(other, self.__class__):
+            raise ValueError("Comparison only between TfBlock objects are allowed")
         return self.start >= other.start
 
     @property
@@ -155,11 +170,11 @@ class TfBlock:
 
     @property
     def content(self):
+        """Returns a dict of the parsed block"""
         return self._content
 
     def get_decorator(self, name: str) -> TfUtilityDecorator | None:
-        """
-        find a decorator with the given name above the current block
+        """find a decorator with the given name above the current block
 
         :param name: The name of the decorator to find
         :type name: str
@@ -185,6 +200,7 @@ class TfBlock:
         :return: True if the block has a decorator with the given name, False otherwise
         :rtype: bool
         """
+        print("blubl" * 10)
         if self._decorators is None:
             self._decorators = self._find_decorators()
         for dec in self._decorators:
@@ -199,9 +215,11 @@ class TfBlock:
         :return: A list of decorators found above this block
         :rtype: list[TfUtilDecorator]
         """
+        print("hiii" * 100)
         line_nr = self._start_line - 2
         decorator_list = []
         while self.tffile.lines[line_nr].strip().startswith("# @"):
+            print(self.tffile.lines[line_nr])
             found_decorator = self.tffile.lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
@@ -226,6 +244,14 @@ class TfFile:
     @property
     def tffile(self):
         return self._tf_file
+
+    @property
+    def lines(self):
+        return self._tf_file.lines
+
+    @property
+    def hcl(self):
+        return self._tf_file.parsed
 
     @deprecated
     def get_tffile(self):
