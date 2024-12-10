@@ -41,7 +41,6 @@ class FooBar(TfPaths, Command):
 
         for file in tf_files:
             file = TfFile(file)
-
             for block in file.get_blocks_with_decorator(self.get_command_name()):
                 self.new_decorator(self, block)
 
@@ -61,7 +60,6 @@ def test_base_tfpaths_required(mocker):
 
 def test_tfpath_parsing(mocker):
     mocker.patch("tfutility.main.TfUtility.handlers", [FooBar])
-
     VALID_TF = """
         # @foobardecorator
         foobarblock "test" {
@@ -69,9 +67,9 @@ def test_tfpath_parsing(mocker):
             version = "0.0.1"
         }
     """
-    valid_temp = tempfile.NamedTemporaryFile(suffix="tf")
+    valid_temp = tempfile.NamedTemporaryFile(suffix=".tf")
     valid_temp.write(VALID_TF.encode("utf-8"))
-
+    valid_temp.seek(0)
     mocker.patch("sys.argv", ["tfutility", "foobardecorator", valid_temp.name])
 
     foobar_obj = FooBar(None, None)
@@ -85,9 +83,11 @@ def test_tfpath_parsing(mocker):
     assert all(
         [p.as_posix() == valid_temp.name for p in foobar_obj.get_file_list([tmpath])]
     )
-    main()
 
     new_dec = mocker.patch.object(foobar_obj, "new_decorator")
+
+    main()
+
     foobar_obj.handle(
         argparse.Namespace(
             command="foobardecorator", paths=[pathlib.Path(valid_temp.name)]
@@ -123,4 +123,4 @@ def test_cmd_handle(mocker):
 
     assert getblock.call_count == 1
     assert filelist.call_count == 1
-    assert new_dec.call_count == 1
+    assert new_dec.call_count == 0

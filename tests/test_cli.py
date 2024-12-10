@@ -3,6 +3,8 @@ import logging
 import re
 import tempfile
 
+import pytest
+
 from tfutility.main import main
 
 VESION_REGEX = re.compile(r"^(\d+\.)?(\d+\.)?(\*|\d+)$")
@@ -140,3 +142,57 @@ def test_importdate_expirede(mocker, caplog):
 
     assert sysexit.call_args.args == (1,)
     assert "importdate Block expired " in caplog.text
+
+
+def test_sourceswap_missing_parameters(mocker, caplog):
+    INVALID_DATE = """
+        # @sourceswap()
+        module "hi" {
+            source = ""
+            version = ""
+        }
+    """
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(INVALID_DATE.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch(
+        "sys.argv", ["tfutility", "sourceswap", tmpfile.name, "--switch-to", "local"]
+    )
+
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        main()
+
+    assert "requires the parameters" in caplog.text
+
+    assert pytest_wrapped_e.type is SystemExit
+    assert pytest_wrapped_e.value.code == 1
+
+
+def test_sourceswap_wrong_block(mocker, caplog):
+    INVALID_DATE = """
+        # @sourceswap(remotesource="..", remoteversion="0.0.1", localsource="..")
+        resource "hi" "foo" {
+            source = ".."
+            version = "0.0.1"
+        }
+    """
+    caplog.set_level(logging.INFO)
+
+    tmpfile = tempfile.NamedTemporaryFile(suffix=".tf", delete_on_close=False)
+    tmpfile.write(INVALID_DATE.encode("utf-8"))
+    tmpfile.close()
+
+    mocker.patch(
+        "sys.argv", ["tfutility", "sourceswap", tmpfile.name, "--switch-to", "local"]
+    )
+
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        main()
+
+    assert "requires the parameters" in caplog.text
+
+    assert pytest_wrapped_e.type is SystemExit
+    assert pytest_wrapped_e.value.code == 1
