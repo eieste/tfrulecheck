@@ -10,7 +10,7 @@ readme = { file = 'README.md', content-type = 'text/markdown' }
 license = { file = 'LICENSE' }
 authors = [{ name = "Stefan Eiermann", email = "stefan.eiermann@eneka.de" }]
 dependencies = [
-  "python-hcl2==4.3.5",
+  "python-hcl2==5.1.1",
   "argcomplete==3.5.1",
 ]
 classifiers = [
