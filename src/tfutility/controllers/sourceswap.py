@@ -29,15 +29,6 @@ class SourceSwapHandler(TfPaths, Command):
         return parser
 
     def block_switch_to(self, options, block, dec, switch_to):
-        file_path = block.tffile.path
-        if not block.id.startswith("module"):
-            self.get_logger().error(
-                "The decorator @sourceswap applied to wrong blocktype in {}:{}".format(
-                    file_path, block.start
-                )
-            )
-            sys.exit(1)
-
         lines = block.tffile.lines
         source_line = -1
         version_line = -1
@@ -88,20 +79,11 @@ class SourceSwapHandler(TfPaths, Command):
                 del block.tffile.lines[version_line]
 
     def get_decorator(self, block):
-        file_path = block.tffile.path
         dec = block.get_decorator(self.get_command_name())
-        general_error = False
         for param_key in ["remote_source", "remote_version", "local_source"]:
             if not dec.parameter(param_key):
-                self.get_logger().error(
-                    "Decorator {} {}:{} requires the parameters remote_source, remote_version, local_source".format(
-                        self.get_command_name(), file_path, block.start
-                    )
-                )
-                general_error = True
+                return False
 
-        if general_error:
-            sys.exit(1)
         return dec
 
     def handle(self, options):
@@ -116,9 +98,30 @@ class SourceSwapHandler(TfPaths, Command):
             switch_to = SWITCH_DIRECTION.TO_LOCAL
 
         tf_files = self.get_file_list(options.paths)
-
+        precheck_error = False
         for file in tf_files:
             file = TfFile(file)
+
+            for block in file.get_blocks_with_decorator(self.get_command_name()):
+                dec = self.get_decorator(block)
+                if dec is False:
+                    precheck_error = True
+                    self.get_logger().error(
+                        "Decorator {} {}:{} requires the parameters remote_source, remote_version, local_source".format(
+                            self.get_command_name(), file.path, block.start
+                        )
+                    )
+
+                if not block.id.startswith("module."):
+                    precheck_error = True
+                    self.get_logger().error(
+                        "Decorator {} {}:{} is used on an invalid block. It is only allowd to use sourceswap on module blocks".format(
+                            self.get_command_name(), file.path, block.start
+                        )
+                    )
+
+            if precheck_error:
+                sys.exit(1)
 
             for block in file.get_blocks_with_decorator(self.get_command_name()):
                 dec = self.get_decorator(block)

@@ -32,12 +32,35 @@ for detailed Examples visit the [Documentation](https://eieste.github.io/tfutili
 
 ### Use with Docker
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:1.0.9 forcedremotesource /workspace
+docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:1.1.1 forcedremotesource /workspace
 ```
 
 ### Use with pre-commit
 
 
+Create a .pre-commit-config.yaml with the following content.
+```yaml
+
+repos:
+  - repo: https://github.com/eieste/tfutility/
+    rev: 1.1.1
+    hooks:
+      - id: check-forcedremotesource
+      - id: check-importdate
+      - id: check-moveddate
+
+```
+
+Its possible to attach the suffix `-docker` to each hook to use precommit docker hooks
+
+
+### Autocompletion
+
+Run the following command to setup a bash autocompletion for this command
+
+```bash
+register-python-argcomplete tfutilty > /etc/bash_completion.d/tfutilty
+```
 
 ## Quick-Reference
 

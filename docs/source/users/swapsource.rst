@@ -4,6 +4,7 @@ Swap Source
 
 
 
+
 Terraform
 =========
 
@@ -25,10 +26,6 @@ Terraform
       source = ""
       version = ""
    }
-
-
-
-
 
 .. argparse::
    :module: tfutility.main

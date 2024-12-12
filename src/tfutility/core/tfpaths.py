@@ -43,8 +43,9 @@ class TfPaths(AbstractCommand):
             return list(path.glob(self.__class__.SEARCH_GLOB))
         return [path]
 
-    def get_file_list(self, paths: pathlib.Path) -> list[pathlib.Path]:
-        """Resolve all given cli nargs. If a given path has no file matching it logs a warning
+    def get_file_list(self, paths: list[pathlib.Path]) -> list[pathlib.Path]:
+        """Resolve all given cli nargs of Paths (to folders and files) to a simple list of file paths.
+          If a given path has no file matching it logs a warning
 
         :param paths: list[pathlib.Path]
         :type paths: pathlib.Path
