@@ -11,7 +11,7 @@ license = { file = 'LICENSE' }
 authors = [{ name = "Stefan Eiermann", email = "stefan.eiermann@eneka.de" }]
 dependencies = [
   "python-hcl2==4.3.5",
-  "argcomplete==3.5.1",
+  "argcomplete==3.5.2",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
