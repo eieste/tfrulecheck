@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tffile &mdash; TfUtility  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tfpaths" href="tfpaths.html" />
+    <link rel="prev" title="main" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TfUtility
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../users/index.html">Usage Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Development Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="main.html">main</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tffile</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tfutility.core.tffile.TfFile"><code class="docutils literal notranslate"><span class="pre">TfFile</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.blocks"><code class="docutils literal notranslate"><span class="pre">TfFile.blocks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.get_blocks_with_decorator"><code class="docutils literal notranslate"><span class="pre">TfFile.get_blocks_with_decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.get_tffile"><code class="docutils literal notranslate"><span class="pre">TfFile.get_tffile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.hcl"><code class="docutils literal notranslate"><span class="pre">TfFile.hcl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.lines"><code class="docutils literal notranslate"><span class="pre">TfFile.lines</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.parse"><code class="docutils literal notranslate"><span class="pre">TfFile.parse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.read_tf"><code class="docutils literal notranslate"><span class="pre">TfFile.read_tf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.tffile"><code class="docutils literal notranslate"><span class="pre">TfFile.tffile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfFile.write_back"><code class="docutils literal notranslate"><span class="pre">TfFile.write_back()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tfutility.core.tffile.TfBlock"><code class="docutils literal notranslate"><span class="pre">TfBlock</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.DECORATOR_REGEX"><code class="docutils literal notranslate"><span class="pre">TfBlock.DECORATOR_REGEX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.content"><code class="docutils literal notranslate"><span class="pre">TfBlock.content</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.decorators"><code class="docutils literal notranslate"><span class="pre">TfBlock.decorators</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.end"><code class="docutils literal notranslate"><span class="pre">TfBlock.end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.get_decorator"><code class="docutils literal notranslate"><span class="pre">TfBlock.get_decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.get_tfile"><code class="docutils literal notranslate"><span class="pre">TfBlock.get_tfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.has_decorator"><code class="docutils literal notranslate"><span class="pre">TfBlock.has_decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.id"><code class="docutils literal notranslate"><span class="pre">TfBlock.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.start"><code class="docutils literal notranslate"><span class="pre">TfBlock.start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfBlock.tffile"><code class="docutils literal notranslate"><span class="pre">TfBlock.tffile</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator"><code class="docutils literal notranslate"><span class="pre">TfUtilityDecorator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator.PARAM_REGEX"><code class="docutils literal notranslate"><span class="pre">TfUtilityDecorator.PARAM_REGEX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator.get_name"><code class="docutils literal notranslate"><span class="pre">TfUtilityDecorator.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator.name"><code class="docutils literal notranslate"><span class="pre">TfUtilityDecorator.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator.parameter"><code class="docutils literal notranslate"><span class="pre">TfUtilityDecorator.parameter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tfpaths.html">tfpaths</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TfUtility</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Development Guide</a></li>
+      <li class="breadcrumb-item active">tffile</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/code/tffile.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tffile">
+<h1>tffile<a class="headerlink" href="#tffile" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tfutility.core.tffile.</span></span><span class="sig-name descname"><span class="pre">TfFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile" title="Link to this definition"></a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.blocks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks</span></span><a class="headerlink" href="#tfutility.core.tffile.TfFile.blocks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.get_blocks_with_decorator">
+<span class="sig-name descname"><span class="pre">get_blocks_with_decorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile.get_blocks_with_decorator" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.get_tffile">
+<span class="sig-name descname"><span class="pre">get_tffile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile.get_tffile" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.hcl">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hcl</span></span><a class="headerlink" href="#tfutility.core.tffile.TfFile.hcl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.lines">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#tfutility.core.tffile.TfFile.lines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile.parse" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.read_tf">
+<span class="sig-name descname"><span class="pre">read_tf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile.read_tf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.tffile">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tffile</span></span><a class="headerlink" href="#tfutility.core.tffile.TfFile.tffile" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfFile.write_back">
+<span class="sig-name descname"><span class="pre">write_back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfFile.write_back" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tfutility.core.tffile.</span></span><span class="sig-name descname"><span class="pre">TfBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfBlock" title="Link to this definition"></a></dt>
+<dd><p>Represents a block in a terraform file</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.DECORATOR_REGEX">
+<span class="sig-name descname"><span class="pre">DECORATOR_REGEX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">re.compile('#\\s?\\&#64;([a-z]+)(\\((.*)\\))?')</span></em><a class="headerlink" href="#tfutility.core.tffile.TfBlock.DECORATOR_REGEX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.content">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.content" title="Link to this definition"></a></dt>
+<dd><p>Returns a dict of the parsed block</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.decorators">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decorators</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.decorators" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.end">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.end" title="Link to this definition"></a></dt>
+<dd><p>End linenumber of the block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The end linenumber of the block</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.get_decorator">
+<span class="sig-name descname"><span class="pre">get_decorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#tfutility.core.tffile.TfUtilityDecorator" title="tfutility.core.tffile.TfUtilityDecorator"><span class="pre">TfUtilityDecorator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.get_decorator" title="Link to this definition"></a></dt>
+<dd><p>find a decorator with the given name above the current block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the decorator to find</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decorator with the given name or None if not found</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TfUtilDecorator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.get_tfile">
+<span class="sig-name descname"><span class="pre">get_tfile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.get_tfile" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.has_decorator">
+<span class="sig-name descname"><span class="pre">has_decorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.has_decorator" title="Link to this definition"></a></dt>
+<dd><p>Check if this block has a decorator with the given name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the decorator to check for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the block has a decorator with the given name, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.id" title="Link to this definition"></a></dt>
+<dd><p>id of the block. usually tfblocktype.blocktype.blockname</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The id of the block</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.start">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.start" title="Link to this definition"></a></dt>
+<dd><p>Start linenumber of the block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The start linenumber of the block</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfBlock.tffile">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tffile</span></span><a class="headerlink" href="#tfutility.core.tffile.TfBlock.tffile" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfUtilityDecorator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tfutility.core.tffile.</span></span><span class="sig-name descname"><span class="pre">TfUtilityDecorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blockref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfUtilityDecorator" title="Link to this definition"></a></dt>
+<dd><p>Represents a tfutility decorator used in tf files above blocks</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfUtilityDecorator.PARAM_REGEX">
+<span class="sig-name descname"><span class="pre">PARAM_REGEX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">re.compile('(\\b\\w+)(?:=((?:\\&quot;[^\\&quot;\\\\]*(?:\\\\.[^\\&quot;\\\\]*)*\\&quot;|\\w+)))?')</span></em><a class="headerlink" href="#tfutility.core.tffile.TfUtilityDecorator.PARAM_REGEX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfUtilityDecorator.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfUtilityDecorator.get_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfUtilityDecorator.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#tfutility.core.tffile.TfUtilityDecorator.name" title="Link to this definition"></a></dt>
+<dd><p>Name of the Decorator ( string after &#64; sign without arguments from braces text )</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tfutility.core.tffile.TfUtilityDecorator.parameter">
+<span class="sig-name descname"><span class="pre">parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tfutility.core.tffile.TfUtilityDecorator.parameter" title="Link to this definition"></a></dt>
+<dd><p>Returns the value of a given parameter or the default value if the parameter is not set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The name of the parameter</p></li>
+<li><p><strong>default</strong> – The default value to return if the parameter is not set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the parameter or the default value if the parameter is not set</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="main.html" class="btn btn-neutral float-left" title="main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tfpaths.html" class="btn btn-neutral float-right" title="tfpaths" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Stefan Eiermann.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
