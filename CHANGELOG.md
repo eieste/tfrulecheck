@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/eieste/tfutility/compare/v1.2.0...v1.2.1) (2024-12-19)
+
+
+### Bug Fixes
+
+* debug messages and worng path finding ([#29](https://github.com/eieste/tfutility/issues/29)) ([609072e](https://github.com/eieste/tfutility/commit/609072e54d47a9f2c80a3e2c34b21cc98ecb8387))
+* ignore directories with dot ([ecae3bf](https://github.com/eieste/tfutility/commit/ecae3bf4d59d5d2592707ac396a5d5cbad024110))
+
 # [1.2.0](https://github.com/eieste/tfutility/compare/v1.1.1...v1.2.0) (2024-12-12)
 
 

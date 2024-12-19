@@ -32,7 +32,7 @@ for detailed Examples visit the [Documentation](https://eieste.github.io/tfutili
 
 ### Use with Docker
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:1.2.0 forcedremotesource /workspace
+docker run -it --rm -v $(pwd):/workspace ghcr.io/eieste/tfutility:1.2.1 forcedremotesource /workspace
 ```
 
 ### Use with pre-commit
