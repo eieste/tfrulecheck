@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pathlib
 import re
 from collections import namedtuple
@@ -200,7 +199,6 @@ class TfBlock:
         :return: True if the block has a decorator with the given name, False otherwise
         :rtype: bool
         """
-        print("blubl" * 10)
         if self._decorators is None:
             self._decorators = self._find_decorators()
         for dec in self._decorators:
@@ -215,11 +213,9 @@ class TfBlock:
         :return: A list of decorators found above this block
         :rtype: list[TfUtilDecorator]
         """
-        print("hiii" * 100)
         line_nr = self._start_line - 2
         decorator_list = []
         while self.tffile.lines[line_nr].strip().startswith("# @"):
-            print(self.tffile.lines[line_nr])
             found_decorator = self.tffile.lines[line_nr].strip()
             result = TfBlock.DECORATOR_REGEX.fullmatch(found_decorator)
             decorator_list.append(
@@ -234,6 +230,7 @@ class TfFile:
     def __init__(self, path: pathlib.Path, autoparse=True):
         self.path = path
         self._blocks = None
+        print(path)
         self._tf_file = self.read_tf(path)
         if autoparse:
             self.parse()
@@ -285,7 +282,7 @@ class TfFile:
         ):
             elem_names = [key for key in blockdata.keys() if not key.startswith("__")]
 
-            if len(elem_names) > 1:
+            if len(elem_names) < 1:
                 new_name = ""
             else:
                 new_name = elem_names[0]

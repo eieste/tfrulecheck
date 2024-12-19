@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 from datetime import datetime, timedelta
 
@@ -54,14 +53,10 @@ class BlockDateHandler(TfPaths, Command):
 
             if not options.expire_after:
                 if dec.parameter("expire"):
-                    print("HIII")
-
                     dec_date_expire = datetime.strptime(
                         dec.parameter("expire"), "%d-%m-%Y"
                     )
                     if now > dec_date_expire:
-                        print("FOOOHIII")
-
                         self._error = True
                         self.get_logger().error(
                             "{} Block expired in file: {}:{}".format(
@@ -79,7 +74,7 @@ class BlockDateHandler(TfPaths, Command):
 
     def handle(self, options):
         self._error = False
-        results = super(BlockDateHandler, self).handle(options)
+        results = super().handle(options)
 
         tf_files = self.get_file_list(options.paths)
 

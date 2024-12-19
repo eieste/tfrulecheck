@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import argparse
 import pathlib
 
@@ -19,7 +18,7 @@ class TfPaths(AbstractCommand):
         :return: Tthe argument parser enriched with arguments
         :rtype: argparse.ArgumentParser
         """
-        parser = super(TfPaths, self).add_arguments(parser)
+        parser = super().add_arguments(parser)
         parser.add_argument(
             "paths",
             nargs="+",
@@ -54,7 +53,11 @@ class TfPaths(AbstractCommand):
         """
         file_list = []
         for p in paths:
-            file_list += self._get_files_from_path(p)
+            file_list += [
+                f
+                for f in self._get_files_from_path(p)
+                if "/." not in f.absolute().as_posix()
+            ]
 
         if len(file_list) <= 0:
             self.get_logger().warning(
